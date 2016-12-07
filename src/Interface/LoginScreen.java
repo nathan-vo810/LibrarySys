@@ -10,7 +10,7 @@ package Interface;
  *      Version:        1.0
  */
 
-import db.hsqldb.HSQLDB;
+import DB.hsqldb.HSQLDB;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
@@ -48,16 +48,20 @@ public class LoginScreen extends Application {
         passwordInput.setMaxWidth(250);
         passwordInput.setPromptText("Password");
 
-        Button register = new Button("I'm New! Sign up!");
+        Button register = new Button("REGISTER AS NEW USER");
         register.setOnAction(e ->{
             RegisterScreen.displayRegisterScene();
         });
+        register.setMaxWidth(250);
+
         Button loginButton = new Button("SIGN IN");
         loginButton.setOnAction(e -> {
-                String text = loginCheck(usernameInput,passwordInput);
-                loginStatus.setText(text);
-            }
+                    String text = loginCheck(usernameInput, passwordInput);
+                    loginStatus.setText(text);
+                }
         );
+        loginButton.setMaxWidth(250);
+
 //Layout for the Login SCREEN
         GridPane loginLayout = new GridPane();
         loginLayout.setPadding(new Insets(10, 10, 10, 10));
@@ -78,6 +82,7 @@ public class LoginScreen extends Application {
 
         loginLayout.getChildren().addAll(welcome, usernameInput, passwordInput, loginButton, loginStatus, register);
         loginLayout.setAlignment(Pos.CENTER_RIGHT);
+
 //-------------------------------------------------------------------------------------------//
 
         loginScene = new Scene(loginLayout);
