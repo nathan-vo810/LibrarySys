@@ -21,6 +21,7 @@ enum STATUS{ MISSING_FIELD, MISSMATCH_PASS, WRONG_PASSTYPE, SUCCESS}
 public class RegisterScreen {
 
     public static void displayRegisterScene() {
+
         Scene RegisterScene;
         Stage RegisterWindow = new Stage();
         RegisterWindow.getIcons().add( new Image(RegisterScreen.class.getResourceAsStream( "img/edit-icon.png")));
@@ -154,8 +155,6 @@ public class RegisterScreen {
         registerLayout.getChildren().addAll(Title,Firstname,Lastname,Username,Password,Verify_Password,Matriculation,DOB,Phone,Address,
                                             Fname,Lname,Username1,Pass,VerifyPass,MatrNr,dob,phone,address,
                                             register, Missingfield/*, PasswordMissMatch, PasswordWrongType*/);
-
-        registerLayout.setAlignment(Pos.CENTER);
 
         register.setOnAction(event -> {
             if (registerMember(Lname, Fname, Username1, Pass, VerifyPass, dob, MatrNr, phone, address, Missingfield)) {

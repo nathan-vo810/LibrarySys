@@ -21,8 +21,6 @@ import javafx.geometry.*;
 
 public class LoginScreen extends Application {
 
-    Scene loginScene;
-    Stage LoginWindow;
 
     public static void main(String[] args) {
         launch(args);
@@ -30,6 +28,10 @@ public class LoginScreen extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+
+        Scene loginScene;
+        Stage LoginWindow;
+
         //Login Scene
         Label loginStatus = new Label();
         loginStatus.setId("status");
