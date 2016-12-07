@@ -1,4 +1,4 @@
-package DB.hsqldb;
+package db.hsqldb;
 
 import java.sql.DriverManager;
 import java.sql.Connection;
@@ -10,7 +10,7 @@ import java.sql.Statement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import DB.DB;
+import db.DB;
 
 
 public class HSQLDB extends DB {
@@ -20,37 +20,53 @@ public class HSQLDB extends DB {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HSQLDB.class);
 
-	public HSQLDB(String userName, String password) throws Exception {
+	public HSQLDB(String username, String password) throws Exception {
 		super();
 		Class.forName("org.hsqldb.jdbcDriver");
 		logger.info("Connect to database");
 		try {
 			connection = DriverManager.getConnection("jdbc:hsqldb:"
-							+"examplefile",	// filename
-					userName,			// username
-					password);		// password
+							+ "examplefile",    // filename
+					username,            // username
+					password);        // password
 			logger.trace("Connection set");
 		} catch (Exception e) {
 			logger.error("No connection!");
-			throw new Exception("Cannot establish connection!");
+			throw new Exception();
 		}
 	}
-	
-//	public static HSQLDB getInstance() throws Exception {	// Singleton-Pattern
-//		logger.trace("Instance requested");
-//		if (instance == null) {
-//			logger.trace("First time. New instance created");
-//			instance = new HSQLDB();
-//		}
-//		if (instance == null) logger.error("HSQLDB-instance is null");
-//		else logger.trace("Returning HSQLDB-instance");
-//		return instance;
-//	}
-	
+/*
+	public static HSQLDB getInstance() throws Exception {	// Singleton-Pattern
+		logger.trace("Instance requested");
+		if (instance == null) {
+			logger.trace("First time. New instance created");
+			instance = new HSQLDB();
+		}
+		if (instance == null) logger.error("HSQLDB-instance is null");
+		else logger.trace("Returning HSQLDB-instance");
+		return instance;
+	}
+*/
 	public synchronized void commit() throws SQLException {
 		logger.info("Commit DB transactions");
 		connection.commit();
+//		closeAndReconnect();	// if a normal commit doesn't save persistently
 	}
+
+//	private void closeAndReconnect() throws SQLException {
+//		logger.trace("DB shutdown");
+//		Statement statement = connection.createStatement();
+//		statement.execute("shutdown");
+//		logger.trace("Close DB connection");
+//		connection.close();
+//		logger.trace("Reopen DB-connection");
+//		connection = DriverManager.getConnection("jdbc:hsqldb:"
+//				+"vair_db",	// filename
+//				"fh",		// username
+//				"");		// password
+//		if (connection == null) logger.error("No connection!");
+//		else logger.trace("Connection set");
+//	}
 	
 	public synchronized void shutdown() throws SQLException {
 		logger.info("DB shutdown");
