@@ -1,18 +1,33 @@
 package Interface;
 
-/**
- * Created by NhatAnh on 11/30/16.
+/**     Advanced Object-Oriented Programming with Java-Project - WS16
+ *      Prof. Biemann
+ *      GROUP G - LIBRARY MANAGEMENT SYSTEM
+ *      Author:         Anh, Vo Nguyen Nhat
+ *                      Hoang, Nguyen Phuoc Bao
+ *      Date created:   30.11.2016
+ *      Date modified:  02.12.2016
+ *      Version:        1.0
  */
 
-import DB.hsqldb.HSQLDB;
+import db.hsqldb.HSQLDB;
 import javafx.application.Application;
+import javafx.event.EventHandler;
+import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.geometry.*;
 
+import javax.swing.*;
+import java.io.File;
+
 public class LoginScreen extends Application {
+
+    Scene loginScene;
+    Stage LoginWindow;
 
     public static void main(String[] args) {
         launch(args);
@@ -20,50 +35,55 @@ public class LoginScreen extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-
         //Login Scene
         Label loginStatus = new Label();
         loginStatus.setId("status");
-
         Label welcome = new Label("Welcome to the Library");
         welcome.setId("welcome");
 
         TextField usernameInput = new TextField();
         usernameInput.setMaxWidth(250);
         usernameInput.setPromptText("Username");
-
         PasswordField passwordInput = new PasswordField();
         passwordInput.setMaxWidth(250);
         passwordInput.setPromptText("Password");
 
+        Button register = new Button("I'm New! Sign up!");
+        register.setOnAction(e ->{
+            RegisterScreen.displayRegisterScene();
+        });
         Button loginButton = new Button("SIGN IN");
-        loginButton.setMaxWidth(250);
         loginButton.setOnAction(e -> {
                 String text = loginCheck(usernameInput,passwordInput);
                 loginStatus.setText(text);
             }
         );
-
+//Layout for the Login SCREEN
         GridPane loginLayout = new GridPane();
         loginLayout.setPadding(new Insets(10, 10, 10, 10));
         loginLayout.setVgap(10);
+        loginLayout.setHgap(8);
 
         GridPane.setConstraints(welcome, 0, 0);
         GridPane.setConstraints(usernameInput, 0, 1);
         GridPane.setConstraints(passwordInput, 0, 2);
         GridPane.setConstraints(loginButton, 0, 3);
-        GridPane.setConstraints(loginStatus, 0, 4);
+        GridPane.setConstraints(register, 0, 4);
+        GridPane.setConstraints(loginStatus, 0, 5);
+        GridPane.setHalignment(register, HPos.RIGHT);
         GridPane.setHalignment(welcome, HPos.CENTER);
         GridPane.setHalignment(loginButton, HPos.CENTER);
+        GridPane.setHalignment(register, HPos.CENTER);
         GridPane.setHalignment(loginStatus, HPos.CENTER);
 
-        loginLayout.getChildren().addAll(welcome, usernameInput, passwordInput, loginButton, loginStatus);
+        loginLayout.getChildren().addAll(welcome, usernameInput, passwordInput, loginButton, loginStatus, register);
         loginLayout.setAlignment(Pos.CENTER_RIGHT);
+//-------------------------------------------------------------------------------------------//
 
-        Scene loginScene = new Scene(loginLayout);
+        loginScene = new Scene(loginLayout);
         loginScene.getStylesheets().add(LoginScreen.class.getResource("Login.css").toExternalForm());
-
-        Stage LoginWindow = primaryStage;
+        LoginWindow = primaryStage;
+        LoginWindow.getIcons().add( new Image( LoginScreen.class.getResourceAsStream( "tab_icon.jpg" )));
         LoginWindow.setTitle("Library Management System");
         LoginWindow.setScene(loginScene);
         LoginWindow.setWidth(550);
