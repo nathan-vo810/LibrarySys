@@ -1,0 +1,132 @@
+package vair.fh.db;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class AutomaticDatabaseCommitter extends Thread {
+
+	private static final Logger logger = LoggerFactory.getLogger(AutomaticDatabaseCommitter.class);
+	private static AutomaticDatabaseCommitter instance = null;
+	private static Boolean isBlocked = false;
+	private static Boolean somethingToCommit = false;
+	private static Integer normalCountdownStart = 60;
+	private static Integer normalCountdown = normalCountdownStart;
+	private static Integer forcedCommitCountdownStart = 600;
+	private static Integer forcedCommitCountdown = forcedCommitCountdownStart;
+	
+	private AutomaticDatabaseCommitter() {
+	}
+	
+	public synchronized static AutomaticDatabaseCommitter getInstance() {
+		if (instance == null) {
+			instance = new AutomaticDatabaseCommitter();
+			instance.setName("Automatic DB-Committer");
+			instance.start();
+		}
+		return instance;
+	}
+	
+	public void run() {
+		endlessLoopOfWaitAndCommit();
+		// this line is never executed
+	}
+
+	private void endlessLoopOfWaitAndCommit() {
+		while (true) {
+			if (countdownIsGreaterZero()) {
+				logger.trace("Countdown to next commit: "+normalCountdown+" - forced in "+forcedCommitCountdown);
+				waitAndCountDownOneStep();
+			} else {
+				logger.trace("Countdown to next commit: finished");
+				checkAndExecuteCommit();
+			}
+		}
+	}
+
+	private void checkAndExecuteCommit() {
+		checkAndExecuteForcedCommit();
+		checkAndExecuteNormalCommit();
+		restartCountdown();
+	}
+
+	private void restartCountdown() {
+		normalCountdown = normalCountdownStart;
+		forcedCommitCountdown = forcedCommitCountdownStart;
+		logger.trace("Restart countdown to next commit: "+normalCountdown);
+	}
+
+	private void checkAndExecuteNormalCommit() {
+		if (! isBlocked) {
+			isBlocked = true;
+			doCommit();
+			isBlocked = false;
+		}
+	}
+
+	private void doCommit() {
+		if (somethingToCommit) {
+			try {
+				logger.trace("Initiate DB commit");
+				DB.getInstance().commit();
+			} catch (Exception e) {
+				logger.warn("Couldn't commit database",e);
+			}
+			somethingToCommit = false;
+		} else {
+			logger.trace("Nothing to commit");
+		}
+	}
+
+	private void checkAndExecuteForcedCommit() {
+		if (forcedCommitCountdown <= 0) {
+			logger.info("Force commit --> wait for unblocked DB");
+			while(isBlocked) {};	
+		}
+	}
+
+	private void waitAndCountDownOneStep() {
+		try {
+			sleep(1000);
+		} catch (InterruptedException e) {}
+		normalCountdown--;
+		forcedCommitCountdown--;
+	}
+
+	private boolean countdownIsGreaterZero() {
+		return (normalCountdown > 0) && (forcedCommitCountdown > 0);
+	}
+	
+	// keeps dependencies small between concurrent transactions
+	// only using one synchronized semaphore
+	private synchronized boolean blockStateOfDatabaseCommiter(Boolean block) {
+		if (block != null) isBlocked = block;
+		return isBlocked;
+	}
+
+	public void disableDatabaseCommitter() {
+		blockStateOfDatabaseCommiter(true);
+	}
+
+	public void enableDatabaseCommitter() {
+		blockStateOfDatabaseCommiter(false);
+	}
+	
+	public Boolean isDatabaseCommitterWorking() {
+		return blockStateOfDatabaseCommiter(null);
+	}
+	
+	public void commitNextTime() {
+		somethingToCommit = true;
+		normalCountdown = normalCountdownStart;
+	}
+	
+	public static void forceCommit() {
+		somethingToCommit = true;
+		forcedCommitCountdown = 0;
+	}
+
+	public static void setCommitIntervalInSeconds(Integer start) {
+		normalCountdownStart = start;
+	}
+	
+}

@@ -1,0 +1,103 @@
+package vair.fh.db;
+
+import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import org.apache.log4j.PropertyConfigurator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import junit.framework.TestCase;
+
+
+public class DBTest extends TestCase {
+
+	static DB db = null;
+	
+	private static final Logger logger = LoggerFactory.getLogger(HSQLDB.class);
+	
+	
+	public void testLogger() {
+		URL logurl = ClassLoader.getSystemResource("log4j.properties");
+		PropertyConfigurator.configure(logurl);
+		// logger.error("Logger shows errors");
+	}
+	
+	public void testCreateConnection() {
+		try {
+			db = DB.getInstance();
+		} catch (Exception e) {
+			logger.error(e.getMessage(),e);
+			fail();
+		}
+	}
+
+	public void testCreateTable() {
+		try {
+			db.update("CREATE TABLE helloworld ( id INTEGER IDENTITY, eins VARCHAR(256), zwei INTEGER)");
+		} catch (SQLException e) {
+			logger.error(e.getMessage(),e);
+			fail();
+		}
+	}
+	
+	public void testCreateData() {
+		try {
+			db.query("INSERT INTO helloworld (eins,zwei) VALUES('Hello',1)");
+			db.query("INSERT INTO helloworld (eins,zwei) VALUES('world',2)");
+			Double a = 3.14;
+			db.query("INSERT INTO helloworld (eins,zwei) VALUES('"+a.toString()+"',3)");
+		} catch (SQLException e) {
+			logger.error(e.getMessage(),e);
+			fail();
+		}
+	}
+	
+	public void testSelectData() {
+		try {
+			ResultSet result = db.query("SELECT * FROM helloworld");
+			result.next();
+			assertEquals(result.getInt(1),0);
+			assertEquals(result.getString(2),"Hello");
+			assertEquals(result.getInt(3),1);
+			result.next();
+			assertEquals(result.getInt(1),1);
+			assertEquals(result.getString(2),"world");
+			assertEquals(result.getInt(3),2);
+			result.next();
+			assertEquals(result.getDouble(2),3.14);
+		} catch (SQLException e) {
+			logger.error(e.getMessage(),e);
+			fail();
+		}
+	}
+	
+	public void testDeleteAllData() {
+		try {
+			db.query("DELETE FROM helloworld");
+		} catch (SQLException e) {
+			logger.error(e.getMessage(),e);
+			fail();
+		}
+	}
+	
+	public void testDropTable() {
+		try {
+			db.update("DROP TABLE helloworld");
+		} catch (SQLException e) {
+			logger.error(e.getMessage(),e);
+			fail();
+		}
+	}
+
+	public void testCloseConnection() {
+		try {
+			db.shutdown();
+		} catch (SQLException e) {
+			logger.error(e.getMessage(),e);
+			fail();
+		}
+	}
+	
+}

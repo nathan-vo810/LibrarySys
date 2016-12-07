@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 31
+/svn/!svn/ver/95/vair/trunk/lib
+END
+hsqldb.jar
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/95/vair/trunk/lib/hsqldb.jar
+END
+jdom.jar
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/95/vair/trunk/lib/jdom.jar
+END
+junit-4.5.jar
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/95/vair/trunk/lib/junit-4.5.jar
+END
+slf4j-api-1.5.3.jar
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/95/vair/trunk/lib/slf4j-api-1.5.3.jar
+END
+log4j-1.2.15.jar
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/95/vair/trunk/lib/log4j-1.2.15.jar
+END
+slf4j-log4j12-1.5.3.jar
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/95/vair/trunk/lib/slf4j-log4j12-1.5.3.jar
+END
+commons-httpclient-3.1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/95/vair/trunk/lib/commons-httpclient-3.1.jar
+END

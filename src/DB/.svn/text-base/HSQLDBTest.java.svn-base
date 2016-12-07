@@ -1,0 +1,88 @@
+package vair.fh.db;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import junit.framework.TestCase;
+
+
+public class HSQLDBTest extends TestCase {
+
+	static HSQLDB db = null;
+	
+	public void testCreateConnection() {
+		try {
+			db = HSQLDB.getInstance();
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
+	
+
+	public void testCreateTable() {
+		try {
+			db.update("CREATE TABLE helloworld ( id INTEGER IDENTITY, eins VARCHAR(256), zwei INTEGER)");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
+	
+	public void testCreateData() {
+		try {
+			db.query("INSERT INTO helloworld (eins,zwei) VALUES('Hello',1)");
+			db.query("INSERT INTO helloworld (eins,zwei) VALUES('world',2)");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
+	
+	public void testSelectData() {
+		try {
+			ResultSet result = db.query("SELECT * FROM helloworld");
+			result.next();
+			assertEquals(result.getInt(1),0);
+			assertEquals(result.getString(2),"Hello");
+			assertEquals(result.getInt(3),1);
+			result.next();
+			assertEquals(result.getInt(1),1);
+			assertEquals(result.getString(2),"world");
+			assertEquals(result.getInt(3),2);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
+	
+	public void testDeleteAllData() {
+		try {
+			db.query("DELETE FROM helloworld");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
+	
+	public void testDropTable() {
+		try {
+			db.update("DROP TABLE helloworld");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
+
+
+	
+	public void testCloseConnection() {
+		try {
+			db.shutdown();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
+
+}

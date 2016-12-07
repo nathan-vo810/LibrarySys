@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/95/vair/trunk/src/vair/fh/db
+END
+DBTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/95/vair/trunk/src/vair/fh/db/DBTest.java
+END
+DB.java
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/95/vair/trunk/src/vair/fh/db/DB.java
+END
+HSQLDBTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/95/vair/trunk/src/vair/fh/db/HSQLDBTest.java
+END
+AutomaticDatabaseCommitter.java
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/14/vair/trunk/src/vair/fh/db/AutomaticDatabaseCommitter.java
+END
+HSQLDB.java
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/95/vair/trunk/src/vair/fh/db/HSQLDB.java
+END

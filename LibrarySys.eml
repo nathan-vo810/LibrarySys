@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component inherit-compiler-output="true" inheritJdk="true">
+	<output-test url="file://$MODULE_DIR$/out/test/LibrarySys"/>
+	<exclude-output/>
+	<contentEntry url="file://$MODULE_DIR$"/>
+	<levels>
+		<level name="slf4j-api-1.5.3" value="project"/>
+		<level name="slf4j-log4j12-1.5.3" value="project"/>
+		<level name="log4j-1.2.15" value="project"/>
+		<level name="junit-4.5" value="project"/>
+		<level name="hsqldb" value="project"/>
+	</levels>
+</component>
