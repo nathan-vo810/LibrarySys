@@ -12,17 +12,12 @@ package Interface;
 
 import DB.hsqldb.HSQLDB;
 import javafx.application.Application;
-import javafx.event.EventHandler;
-import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.geometry.*;
-
-import javax.swing.*;
-import java.io.File;
 
 public class LoginScreen extends Application {
 
@@ -88,7 +83,7 @@ public class LoginScreen extends Application {
         loginScene = new Scene(loginLayout);
         loginScene.getStylesheets().add(LoginScreen.class.getResource("Login.css").toExternalForm());
         LoginWindow = primaryStage;
-        LoginWindow.getIcons().add( new Image( LoginScreen.class.getResourceAsStream( "tab_icon.jpg" )));
+        LoginWindow.getIcons().add( new Image( LoginScreen.class.getResourceAsStream( "img/tab_icon.jpg" )));
         LoginWindow.setTitle("Library Management System");
         LoginWindow.setScene(loginScene);
         LoginWindow.setWidth(550);

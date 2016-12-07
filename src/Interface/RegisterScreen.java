@@ -19,7 +19,7 @@ public class RegisterScreen {
     public static void displayRegisterScene() {
         Scene RegisterScene;
         Stage RegisterWindow = new Stage();
-        RegisterWindow.getIcons().add( new Image(RegisterScreen.class.getResourceAsStream( "edit-icon.png")));
+        RegisterWindow.getIcons().add( new Image(RegisterScreen.class.getResourceAsStream( "img/edit-icon.png")));
 
         Label Title = new Label("REGISTER ALL FIELDS ARE REQUIRED");
         Title.setId("Title");
