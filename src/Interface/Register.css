@@ -3,6 +3,15 @@
     -fx-background-size: cover;
 }
 
+.text-field{
+    -fx-min-width: 300px;
+}
+
+.password-field{
+    -fx-min-width: 300px;
+}
+
+
 #Title,#Title2{
     -fx-font-size: 20px;
     -fx-font-weight: bold;
@@ -10,25 +19,31 @@
 }
 
 #mismatch, #wrongtype, #Missingfield{
-    -fx-font-size: 20px;
+    -fx-font-size: 15px;
     -fx-font-weight: bold;
     -fx-text-fill: crimson;
 }
 
-#lname,#sname,#lid,#pass,#verify_pass,#matrnr,#dob,#phone,#address{
-    -fx-font-size: 18px;
-    -fx-text-fill: black;
+.label{
+    -fx-font-size: 15px;
+    -fx-text-fill: dimgrey;
+}
+
+.grid{
+    -fx-alignment: center;
 }
 
 #dob1.error,#lname1.error,#sname1.error,#lid1.error,#pass_field.error,#verify_pass_field.error,#phone1.error,#address1.error,#matrnr1.error{
-    -fx-border-color: rgba(240, 22, 30, 0.28);
     -fx-background-color: rgba(240, 22, 30, 0.28);
-}
-.button {
-    -fx-text-fill: azure;
-    -fx-background-color: lightcoral;
+    -fx-max-width: 350px;
 }
 
-.button:hover {
-    -fx-background-color: palevioletred;
+#registerBtn {
+    -fx-text-fill: azure;
+    -fx-background-color: mediumseagreen;
+    -fx-min-width: 350px;
+}
+
+#registerBtn:hover {
+    -fx-background-color: mediumspringgreen;
 }

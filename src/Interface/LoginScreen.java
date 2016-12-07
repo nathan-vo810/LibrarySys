@@ -44,18 +44,18 @@ public class LoginScreen extends Application {
         passwordInput.setPromptText("Password");
 
         Button register = new Button("REGISTER AS NEW USER");
+        register.setId("registerBtn");
         register.setOnAction(e ->{
             RegisterScreen.displayRegisterScene();
         });
-        register.setMaxWidth(250);
 
         Button loginButton = new Button("SIGN IN");
+        loginButton.setId("loginBtn");
         loginButton.setOnAction(e -> {
                     String text = loginCheck(usernameInput, passwordInput);
                     loginStatus.setText(text);
                 }
         );
-        loginButton.setMaxWidth(250);
 
 //Layout for the Login SCREEN
         GridPane loginLayout = new GridPane();
@@ -83,7 +83,7 @@ public class LoginScreen extends Application {
         loginScene = new Scene(loginLayout);
         loginScene.getStylesheets().add(LoginScreen.class.getResource("Login.css").toExternalForm());
         LoginWindow = primaryStage;
-        LoginWindow.getIcons().add( new Image( LoginScreen.class.getResourceAsStream( "img/tab_icon.jpg" )));
+        LoginWindow.getIcons().add(new Image( LoginScreen.class.getResourceAsStream( "img/tab_icon.jpg" )));
         LoginWindow.setTitle("Library Management System");
         LoginWindow.setScene(loginScene);
         LoginWindow.setWidth(550);

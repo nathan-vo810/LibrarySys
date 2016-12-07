@@ -14,10 +14,25 @@
 }
 
 .button {
-    -fx-text-fill: azure;
-    -fx-background-color: lightcoral;
+    -fx-font-size: 12;
+    -fx-font-weight: bold;
+    -fx-max-width: 250px;
 }
 
-.button:hover {
-    -fx-background-color: palevioletred;
+#loginBtn {
+    -fx-text-fill: azure;
+    -fx-background-color: dodgerblue;
+}
+
+#loginBtn:hover {
+    -fx-background-color: deepskyblue;
+}
+
+#registerBtn {
+    -fx-text-fill: azure;
+    -fx-background-color: mediumseagreen;
+}
+
+#registerBtn:hover {
+    -fx-background-color: mediumspringgreen;
 }
