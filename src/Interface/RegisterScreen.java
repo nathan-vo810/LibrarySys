@@ -1,6 +1,6 @@
 package Interface;
 
-import db.hsqldb.HSQLDB;
+import DB.hsqldb.HSQLDB;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
