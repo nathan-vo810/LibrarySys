@@ -6,6 +6,7 @@ import DB.hsqldb.HSQLDB;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -175,6 +176,12 @@ public class RegisterScreen {
         RegisterWindow.setHeight(650);
         RegisterWindow.setResizable(false);
         RegisterWindow.show();
+
+        RegisterScene.setOnKeyPressed(event -> {
+            if (registerMember(Lname, Fname, Username1, Pass, VerifyPass, dob, MatrNr, phone, address, Missingfield)) {
+                RegisterWindow.close();
+            }
+        });
     }
 
     //----------------------------------FUNCTIONS-----------------------------------------------------------//
