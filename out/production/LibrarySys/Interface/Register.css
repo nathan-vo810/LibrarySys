@@ -42,8 +42,6 @@
     -fx-text-fill: azure;
     -fx-background-color: mediumseagreen;
     -fx-min-width: 350px;
-    -fx-font-size: 12;
-    -fx-font-weight: bold;
 }
 
 #registerBtn:hover {
