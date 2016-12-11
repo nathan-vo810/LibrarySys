@@ -15,7 +15,6 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.geometry.*;
@@ -95,13 +94,6 @@ public class LoginScreen extends Application {
         LoginWindow.setHeight(400);
         LoginWindow.setResizable(false);
         LoginWindow.show();
-
-        loginScene.setOnKeyPressed(event -> {
-            if(event.getCode() == KeyCode.ENTER){
-                String text = loginCheck(usernameInput, passwordInput);
-                loginStatus.setText(text);
-            }
-        });
     }
 
     private String loginCheck(TextField usr, PasswordField pass) {
