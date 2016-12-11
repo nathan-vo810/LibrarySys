@@ -177,11 +177,6 @@ public class RegisterScreen {
         RegisterWindow.setResizable(false);
         RegisterWindow.show();
 
-        RegisterScene.setOnKeyPressed(event -> {
-            if (registerMember(Lname, Fname, Username1, Pass, VerifyPass, dob, MatrNr, phone, address, Missingfield)) {
-                RegisterWindow.close();
-            }
-        });
     }
 
     //----------------------------------FUNCTIONS-----------------------------------------------------------//
@@ -195,7 +190,7 @@ public class RegisterScreen {
                 HSQLDB adding = new HSQLDB("admin","admin@vgu");
                 adding.query("CREATE USER " + username.getText() + " PASSWORD " + password.getText());
                 adding.query("GRANT DBA TO " + username.getText());
-                adding.query("INSERT INTO STUDENT(LNAME,FNAME,MATRNR,LID,DOB,PHONE,ADDRESS) " +
+                    adding.query("INSERT INTO STUDENT(LNAME,FNAME,MATRNR,LID,DOB,PHONE,ADDRESS) " +
                         "VALUES(" + "'" + lName.getText() + "'" +","
                         + "'"+ fName.getText() + "'" +"," +
                         matrNr.getText() +"," +
@@ -204,6 +199,7 @@ public class RegisterScreen {
                         "'" +phone.getText() +"'" +"," +
                         "'" +address.getText() +"'" + ")");
                 status = true;
+                adding.shutdown();
             } catch (Exception e) {
                 //REMIND ME LATERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
                 e.printStackTrace(); //REMIND ME LATERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR

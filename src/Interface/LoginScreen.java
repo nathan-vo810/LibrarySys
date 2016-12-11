@@ -55,10 +55,18 @@ public class LoginScreen extends Application {
         Button loginButton = new Button("SIGN IN");
         loginButton.setId("loginBtn");
         loginButton.setOnAction(e -> {
-                    String text = loginCheck(usernameInput, passwordInput);
-                    loginStatus.setText(text);
+            String text = loginCheck(usernameInput, passwordInput);
+            if (text == "Success") {
+                primaryStage.close();
+                try {
+                    StudentProfileScreen.displayStudentProfileScene(usernameInput.getText(), passwordInput.getText());
+                } catch (Exception e1) {
+                    e1.printStackTrace();
                 }
-        );
+            } else {
+                loginStatus.setText(text);
+            }
+        });
 
 //Layout for the Login SCREEN
         GridPane loginLayout = new GridPane();
@@ -97,7 +105,16 @@ public class LoginScreen extends Application {
         loginScene.setOnKeyPressed(event -> {
             if(event.getCode() == KeyCode.ENTER){
                 String text = loginCheck(usernameInput, passwordInput);
-                loginStatus.setText(text);
+                if (text == "Success") {
+                    primaryStage.close();
+                    try {
+                        StudentProfileScreen.displayStudentProfileScene(usernameInput.getText(), passwordInput.getText());
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
+                } else {
+                    loginStatus.setText(text);
+                }
             }
         });
     }
@@ -105,6 +122,7 @@ public class LoginScreen extends Application {
     private String loginCheck(TextField usr, PasswordField pass) {
         try {
             HSQLDB database = new HSQLDB(usr.getText(),pass.getText());
+            database.shutdown();
             return "Success";
         } catch (Exception e) {
             return  "Wrong username or password!!!";
