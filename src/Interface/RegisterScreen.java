@@ -6,7 +6,6 @@ import DB.hsqldb.HSQLDB;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -182,7 +181,10 @@ public class RegisterScreen {
         RegisterWindow.setHeight(650);
         RegisterWindow.setResizable(false);
         RegisterWindow.show();
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
     }
 
     //----------------------------------FUNCTIONS-----------------------------------------------------------//
