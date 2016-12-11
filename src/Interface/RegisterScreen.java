@@ -180,9 +180,12 @@ public class RegisterScreen {
         RegisterWindow.setResizable(false);
         RegisterWindow.show();
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> origin/master
+=======
+>>>>>>> parent of a193b76... Ability to pressing Enter for two scenes
     }
 
     //----------------------------------FUNCTIONS-----------------------------------------------------------//

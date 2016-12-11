@@ -110,6 +110,7 @@ public class LoginScreen extends Application {
         LoginWindow.setResizable(false);
         LoginWindow.show();
 <<<<<<< HEAD
+<<<<<<< HEAD
 
         loginScene.setOnKeyPressed(event -> {
             if(event.getCode() == KeyCode.ENTER){
@@ -128,6 +129,8 @@ public class LoginScreen extends Application {
         });
 =======
 >>>>>>> origin/master
+=======
+>>>>>>> parent of a193b76... Ability to pressing Enter for two scenes
     }
 
     private String loginCheck(TextField usr, PasswordField pass) {
