@@ -15,7 +15,7 @@ import DB.DB;
 
 public class HSQLDB extends DB {
 	
-	private static HSQLDB instance = null;
+	//private static HSQLDB instance = null;
 	private static Connection connection;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HSQLDB.class);
@@ -73,7 +73,7 @@ public class HSQLDB extends DB {
 		Statement statement = connection.createStatement();
 		statement.execute("shutdown");
 		connection.close();
-		instance = null;
+		//instance = null;
 	}
 	
 	public synchronized ResultSet query(String sqlExpression) throws SQLException {

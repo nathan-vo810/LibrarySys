@@ -12,8 +12,14 @@ import javafx.stage.Stage;
 import javafx.geometry.*;
 import javafx.util.StringConverter;
 
-/**
- * Created by ngpbh on 12/5/2016.
+/**     Advanced Object-Oriented Programming with Java-Project - WS16
+ *      Prof. Biemann
+ *      GROUP G - LIBRARY MANAGEMENT SYSTEM
+ *      Author:         Anh, Vo Nguyen Nhat
+ *                      Hoang, Nguyen Phuoc Bao
+ *      Date created:   30.11.2016
+ *      Date modified:  02.12.2016
+ *      Version:        1.0
  */
 
 enum STATUS{ MISSING_FIELD, MISSMATCH_PASS, WRONG_PASSTYPE, SUCCESS}
@@ -173,6 +179,10 @@ public class RegisterScreen {
         RegisterWindow.setHeight(650);
         RegisterWindow.setResizable(false);
         RegisterWindow.show();
+<<<<<<< HEAD
+
+=======
+>>>>>>> origin/master
     }
 
     //----------------------------------FUNCTIONS-----------------------------------------------------------//
@@ -186,7 +196,7 @@ public class RegisterScreen {
                 HSQLDB adding = new HSQLDB("admin","admin@vgu");
                 adding.query("CREATE USER " + username.getText() + " PASSWORD " + password.getText());
                 adding.query("GRANT DBA TO " + username.getText());
-                adding.query("INSERT INTO STUDENT(LNAME,FNAME,MATRNR,LID,DOB,PHONE,ADDRESS) " +
+                    adding.query("INSERT INTO STUDENT(LNAME,FNAME,MATRNR,LID,DOB,PHONE,ADDRESS) " +
                         "VALUES(" + "'" + lName.getText() + "'" +","
                         + "'"+ fName.getText() + "'" +"," +
                         matrNr.getText() +"," +
@@ -195,6 +205,7 @@ public class RegisterScreen {
                         "'" +phone.getText() +"'" +"," +
                         "'" +address.getText() +"'" + ")");
                 status = true;
+                adding.shutdown();
             } catch (Exception e) {
                 //REMIND ME LATERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
                 e.printStackTrace(); //REMIND ME LATERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
