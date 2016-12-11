@@ -13,8 +13,14 @@ import javafx.stage.Stage;
 import javafx.geometry.*;
 import javafx.util.StringConverter;
 
-/**
- * Created by ngpbh on 12/5/2016.
+/**     Advanced Object-Oriented Programming with Java-Project - WS16
+ *      Prof. Biemann
+ *      GROUP G - LIBRARY MANAGEMENT SYSTEM
+ *      Author:         Anh, Vo Nguyen Nhat
+ *                      Hoang, Nguyen Phuoc Bao
+ *      Date created:   30.11.2016
+ *      Date modified:  02.12.2016
+ *      Version:        1.0
  */
 
 enum STATUS{ MISSING_FIELD, MISSMATCH_PASS, WRONG_PASSTYPE, SUCCESS}

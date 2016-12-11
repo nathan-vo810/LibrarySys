@@ -12,6 +12,7 @@ import java.util.Calendar;
 import java.util.Map;
 
 import DB.hsqldb.HSQLDB;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -20,9 +21,16 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-/**
- * Created by ngpbh on 12/11/2016.
+/**     Advanced Object-Oriented Programming with Java-Project - WS16
+ *      Prof. Biemann
+ *      GROUP G - LIBRARY MANAGEMENT SYSTEM
+ *      Author:         Anh, Vo Nguyen Nhat
+ *                      Hoang, Nguyen Phuoc Bao
+ *      Date created:   30.11.2016
+ *      Date modified:  02.12.2016
+ *      Version:        1.0
  */
+
 public class StudentProfileScreen {
 
     public static void displayStudentProfileScene(String usernameInput, String passwordInput) throws Exception {
@@ -35,6 +43,7 @@ public class StudentProfileScreen {
         //System.out.print(Student_Information.wasNull());
         //Student_Information = student.query("SELECT * FROM STUDENT");
         //RegisterScene.getStylesheets().add(RegisterScreen.class.getResource("Register.css").toExternalForm());
+
         String Sname ="";
         while (Student_Information.next()) {
             Sname = Student_Information.getString("FName");
