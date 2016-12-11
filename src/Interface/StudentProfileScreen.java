@@ -31,11 +31,15 @@ public class StudentProfileScreen {
         Stage Student_ProfileWindow = new Stage();
         Student_ProfileScene = new Scene(Student_ProfileLayout);
         HSQLDB student = new HSQLDB(usernameInput,passwordInput);
-        ResultSet Student_Information = student.query("SELECT * FROM STUDENT WHERE MATRNR = 1148181");//just for testing
-
+        ResultSet Student_Information = student.query("SELECT FNAME FROM STUDENT WHERE MATRNR = 1148181");//just for testing
+        //System.out.print(Student_Information.wasNull());
         //Student_Information = student.query("SELECT * FROM STUDENT");
         //RegisterScene.getStylesheets().add(RegisterScreen.class.getResource("Register.css").toExternalForm());
-        Student_ProfileWindow.setTitle(Student_Information.toString());
+        String Sname ="";
+        while (Student_Information.next()) {
+            Sname = Student_Information.getString("FName");
+        }
+        Student_ProfileWindow.setTitle(Sname);
         Student_ProfileWindow.setScene(Student_ProfileScene);
         Student_ProfileWindow.setWidth(724);
         Student_ProfileWindow.setHeight(492);
