@@ -57,7 +57,9 @@ public class LoginScreen extends Application {
         loginButton.setOnAction(e -> {
                     String text = loginCheck(usernameInput, passwordInput);
                     loginStatus.setText(text);
-                }
+
+                    if (text.equals("Success")) BookSearch.displayBookSearch();
+            }
         );
 
 //Layout for the Login SCREEN
