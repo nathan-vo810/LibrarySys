@@ -57,8 +57,6 @@ public class LoginScreen extends Application {
         loginButton.setOnAction(e -> {
                     String text = loginCheck(usernameInput, passwordInput);
                     loginStatus.setText(text);
-
-                    if (text.equals("Success")) BookSearch.displayBookSearch();
             }
         );
 
@@ -102,6 +100,7 @@ public class LoginScreen extends Application {
                 if (text == "Success") {
                     primaryStage.close();
                     try {
+                        BookSearch.displayBookSearch();
                         StudentProfileScreen.displayStudentProfileScene(usernameInput.getText(), passwordInput.getText());
                     } catch (Exception e1) {
                         e1.printStackTrace();
