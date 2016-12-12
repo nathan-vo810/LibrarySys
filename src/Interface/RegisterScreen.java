@@ -158,6 +158,8 @@ public class RegisterScreen {
         //GridPane.setConstraints(PasswordMissMatch, 0, 14);
         //GridPane.setConstraints(PasswordWrongType, 0, 14);
 
+        registerLayout.setAlignment(Pos.CENTER);
+
         registerLayout.getChildren().addAll(Title,Firstname,Lastname,Username,Password,Verify_Password,Matriculation,DOB,Phone,Address,
                                             Fname,Lname,Username1,Pass,VerifyPass,MatrNr,dob,phone,address,
                                             register, Missingfield/*, PasswordMissMatch, PasswordWrongType*/);
@@ -179,13 +181,6 @@ public class RegisterScreen {
         RegisterWindow.setHeight(650);
         RegisterWindow.setResizable(false);
         RegisterWindow.show();
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/master
-=======
->>>>>>> parent of a193b76... Ability to pressing Enter for two scenes
     }
 
     //----------------------------------FUNCTIONS-----------------------------------------------------------//

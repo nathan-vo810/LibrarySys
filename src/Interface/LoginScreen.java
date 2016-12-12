@@ -15,6 +15,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.geometry.*;
@@ -54,27 +55,12 @@ public class LoginScreen extends Application {
         Button loginButton = new Button("SIGN IN");
         loginButton.setId("loginBtn");
         loginButton.setOnAction(e -> {
-<<<<<<< HEAD
-            String text = loginCheck(usernameInput, passwordInput);
-            if (text == "Success") {
-                primaryStage.close();
-                try {
-                    StudentProfileScreen.displayStudentProfileScene(usernameInput.getText(), passwordInput.getText());
-                } catch (Exception e1) {
-                    e1.printStackTrace();
-                }
-            } else {
-                loginStatus.setText(text);
-            }
-        });
-=======
                     String text = loginCheck(usernameInput, passwordInput);
                     loginStatus.setText(text);
 
                     if (text.equals("Success")) BookSearch.displayBookSearch();
             }
         );
->>>>>>> origin/master
 
 //Layout for the Login SCREEN
         GridPane loginLayout = new GridPane();
@@ -109,8 +95,6 @@ public class LoginScreen extends Application {
         LoginWindow.setHeight(400);
         LoginWindow.setResizable(false);
         LoginWindow.show();
-<<<<<<< HEAD
-<<<<<<< HEAD
 
         loginScene.setOnKeyPressed(event -> {
             if(event.getCode() == KeyCode.ENTER){
@@ -127,10 +111,6 @@ public class LoginScreen extends Application {
                 }
             }
         });
-=======
->>>>>>> origin/master
-=======
->>>>>>> parent of a193b76... Ability to pressing Enter for two scenes
     }
 
     private String loginCheck(TextField usr, PasswordField pass) {
