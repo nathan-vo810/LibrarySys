@@ -19,7 +19,7 @@ import java.sql.ResultSet;
  */
 public class BookSearch {
 
-    public static void displayBookSearch() {
+    public static void displayBookSearch(String username, String password) {
 
         //Search Panel
         TextField searchBox = new TextField();
@@ -27,7 +27,7 @@ public class BookSearch {
 
         Button searchBtn = new Button();
         searchBtn.setText("Search");
-        searchBtn.setOnAction(e->searchBook(searchBox.getText()));
+        searchBtn.setOnAction(e->searchBook(searchBox.getText(),username,password));
 
         HBox searchPane = new HBox();
         searchPane.setPadding(new Insets(10,10,10,10));
@@ -74,7 +74,12 @@ public class BookSearch {
         searchWindow.show();
     }
 
-    public static void searchBook(String inputData) {
-        //ResultSet bookQuery = database.query("SELECT * FROM WHERE ");
+    public static void searchBook(String inputData, String username, String password) {
+        try {
+            HSQLDB books = new HSQLDB(username, password);
+            //ResultSet bookQuery = books.query("SELECT * FROM WHERE ");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

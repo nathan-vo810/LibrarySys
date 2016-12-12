@@ -57,8 +57,22 @@ public class LoginScreen extends Application {
         loginButton.setOnAction(e -> {
                     String text = loginCheck(usernameInput, passwordInput);
                     loginStatus.setText(text);
+
+                    if (text == "Success") {
+                        primaryStage.close();
+                        try {
+                            BookSearch.displayBookSearch(usernameInput.getText(), passwordInput.getText());
+                            StudentProfileScreen.displayStudentProfileScene(usernameInput.getText(), passwordInput.getText());
+                        } catch (Exception e1) {
+                            e1.printStackTrace();
+                        }
+                    } else {
+                        loginStatus.setText(text);
+                    }
             }
         );
+        //Bind to enter
+        loginButton.setDefaultButton(true);
 
 //Layout for the Login SCREEN
         GridPane loginLayout = new GridPane();
@@ -93,23 +107,6 @@ public class LoginScreen extends Application {
         LoginWindow.setHeight(400);
         LoginWindow.setResizable(false);
         LoginWindow.show();
-
-        loginScene.setOnKeyPressed(event -> {
-            if(event.getCode() == KeyCode.ENTER){
-                String text = loginCheck(usernameInput, passwordInput);
-                if (text == "Success") {
-                    primaryStage.close();
-                    try {
-                        BookSearch.displayBookSearch();
-                        StudentProfileScreen.displayStudentProfileScene(usernameInput.getText(), passwordInput.getText());
-                    } catch (Exception e1) {
-                        e1.printStackTrace();
-                    }
-                } else {
-                    loginStatus.setText(text);
-                }
-            }
-        });
     }
 
     private String loginCheck(TextField usr, PasswordField pass) {
