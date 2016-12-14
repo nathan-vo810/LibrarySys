@@ -3,6 +3,8 @@ package Interface;
 import DB.hsqldb.HSQLDB;
 import Models.Books;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -13,6 +15,7 @@ import javafx.stage.Stage;
 import javafx.geometry.*;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * Created by NhatAnh on 12/11/16.
@@ -27,7 +30,6 @@ public class BookSearch {
 
         Button searchBtn = new Button();
         searchBtn.setText("Search");
-        searchBtn.setOnAction(e->searchBook(searchBox.getText(),username,password));
 
         HBox searchPane = new HBox();
         searchPane.setPadding(new Insets(10,10,10,10));
@@ -37,16 +39,25 @@ public class BookSearch {
         Label note = new Label("Search by Title, ISBN or Author");
 
         //Result table
-        TableView<Books> resultTable= new TableView<>();
+        TableView<Books> resultTable = new TableView<>();
         resultTable.setMinHeight(500);
 
-        TableColumn<Books, String> isbn = new TableColumn<>("ISBN");
-        TableColumn<Books, String> title = new TableColumn<>("Title");
-        TableColumn<Books, String> author = new TableColumn<>("Author");
-        TableColumn<Books, Integer> remain = new TableColumn<>("Remain");
+        TableColumn<Books, String> isbnCol = new TableColumn<>("ISBN");
+        isbnCol.setCellValueFactory(new PropertyValueFactory<>("isbn"));
 
-        resultTable.getColumns().addAll(isbn,title,author,remain);
+        TableColumn<Books, String> titleCol = new TableColumn<>("Title");
+        titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+
+        TableColumn<Books, String> authorCol = new TableColumn<>("Author");
+        authorCol.setCellValueFactory(new PropertyValueFactory<>("author"));
+
+        TableColumn<Books, Integer> remainCol = new TableColumn<>("Remain");
+        remainCol.setCellValueFactory(new PropertyValueFactory<>("remain"));
+
+        resultTable.getColumns().addAll(isbnCol,titleCol,authorCol,remainCol);
         resultTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        searchBtn.setOnAction(e->searchBook(searchBox, username, password, resultTable));
 
         GridPane searchLayout = new GridPane();
         searchLayout.setPadding(new Insets(10, 10, 10, 10));
@@ -74,13 +85,42 @@ public class BookSearch {
         searchWindow.show();
     }
 
-    public static void searchBook(String inputData, String username, String password) {
+    public static void searchBook(TextField searchBox, String username, String password, TableView<Books> resultTable) {
         try {
+            String inputData = searchBox.getText();
             HSQLDB books = new HSQLDB(username, password);
-            //ResultSet bookQuery = books.query("SELECT * FROM WHERE ");
+            ResultSet bookQuery = books.query("SELECT * FROM MATERIAL WHERE ISBN = '" + inputData +
+                                                                        "' OR NAME = '" + inputData +
+                                                                        "' OR AUTHOR = '" + inputData + "'");
+            resultTable.setItems(getData(bookQuery));
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    //Query data and then add to list
+    public static ObservableList<Books> getData(ResultSet booksData) {
+        //Initialize Books list
+        ObservableList<Books> booksList = FXCollections.observableArrayList();
+
+        try {
+            while (booksData.next()) {
+
+                //Get attributes
+                String isbn = booksData.getString("isbn");
+                String title = booksData.getString("name");
+                String author = booksData.getString("author");
+                Integer remain = booksData.getInt("remain");
+
+                //Add to list
+                booksList.add(new Books(title, isbn, author, remain));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return booksList;
+
     }
 
 

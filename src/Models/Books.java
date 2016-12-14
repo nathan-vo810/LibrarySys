@@ -4,8 +4,15 @@ package Models;
  * Created by NhatAnh on 12/12/16.
  */
 public class Books {
-    private String title, ISBN, author;
+    private String title, isbn, author;
     private Integer remain;
+
+    public Books(String title, String isbn, String author, Integer remain) {
+        this.title = title;
+        this.isbn = isbn;
+        this.author = author;
+        this.remain = remain;
+    }
 
     public String getTitle() {
         return title;
@@ -15,12 +22,12 @@ public class Books {
         this.title = title;
     }
 
-    public String getISBN() {
-        return ISBN;
+    public String getIsbn() {
+        return isbn;
     }
 
-    public void setISBN(String ISBN) {
-        this.ISBN = ISBN;
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
     }
 
     public String getAuthor() {
