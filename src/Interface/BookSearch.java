@@ -57,8 +57,7 @@ public class BookSearch {
         resultTable.getColumns().addAll(isbnCol,titleCol,authorCol,remainCol);
         resultTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        String inputData = searchBox.getText();
-        searchBtn.setOnAction(e->searchBook(inputData, username, password, resultTable));
+        searchBtn.setOnAction(e->searchBook(searchBox, username, password, resultTable));
 
         GridPane searchLayout = new GridPane();
         searchLayout.setPadding(new Insets(10, 10, 10, 10));
@@ -86,10 +85,13 @@ public class BookSearch {
         searchWindow.show();
     }
 
-    public static void searchBook(String inputData, String username, String password, TableView<Books> resultTable) {
+    public static void searchBook(TextField searchBox, String username, String password, TableView<Books> resultTable) {
         try {
+            String inputData = searchBox.getText();
             HSQLDB books = new HSQLDB(username, password);
-            ResultSet bookQuery = books.query("SELECT * FROM MATERIAL WHERE MATERIAL_TYPE = 'BOOK'");
+            ResultSet bookQuery = books.query("SELECT * FROM MATERIAL WHERE ISBN = '" + inputData +
+                                                                        "' OR NAME = '" + inputData +
+                                                                        "' OR AUTHOR = '" + inputData + "'");
             resultTable.setItems(getData(bookQuery));
         } catch (Exception e) {
             e.printStackTrace();

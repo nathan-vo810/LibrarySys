@@ -22,11 +22,13 @@ public class Books {
         this.title = title;
     }
 
-    public String getISBN() {
+    public String getIsbn() {
         return isbn;
     }
 
-    public void setISBN(String isbn) { this.isbn = isbn; }
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
 
     public String getAuthor() {
         return author;
