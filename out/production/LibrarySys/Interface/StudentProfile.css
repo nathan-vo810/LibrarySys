@@ -1,0 +1,27 @@
+#root {
+    -fx-alignment: center;
+}
+#Signout {
+    -fx-text-fill: azure;
+    -fx-background-color: mediumseagreen;
+}
+
+#Signout:hover {
+    -fx-background-color: mediumspringgreen;
+}
+
+#Student_info {
+    -fx-font-style: normal;
+}
+
+#Profile_picture {
+    -fx-alignment: center;
+}
+
+#Toggle_button.off, #Toggle_button {
+    -fx-graphic: url("off_toggle.png");
+}
+
+#Toggle_button.on {
+    -fx-graphic: url("on_toggle.png");
+}
