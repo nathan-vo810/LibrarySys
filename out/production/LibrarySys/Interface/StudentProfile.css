@@ -22,6 +22,10 @@
     -fx-graphic: url("img/off_toggle.png");
 }
 
+#Toggle_button:hover, #Toggle_button{
+    -fx-background-color: inherit;
+}
+
 #Toggle_button.on {
     -fx-graphic: url("img/on_toggle.png");
 }

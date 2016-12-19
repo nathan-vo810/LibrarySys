@@ -57,6 +57,8 @@ public class BookSearch {
         resultTable.getColumns().addAll(isbnCol,titleCol,authorCol,remainCol);
         resultTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
+        resultTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
         searchBtn.setOnAction(e->searchBook(searchBox, username, password, resultTable));
 
         GridPane searchLayout = new GridPane();

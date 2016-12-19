@@ -74,7 +74,7 @@ public class StudentProfileScreen {
         imageView.setId("Profile_picture");
         imageView.setFitHeight(100.0);
         imageView.setFitWidth(163.0);
-        imageView.setLayoutX(47.0);
+        imageView.setLayoutX(50.0);
         imageView.setLayoutY(40.0);
         //Toggle Button and Button
         Button Signout = new Button("SIGN OUT");
@@ -82,7 +82,7 @@ public class StudentProfileScreen {
         ToggleButton Display_Profile = new ToggleButton();
         Display_Profile.setId("Toggle_button");
         Display_Profile.setText("");
-        Display_Profile.setLayoutX(72.0);
+        Display_Profile.setLayoutX(70.0);
         Display_Profile.setLayoutY(227.0);
         Display_Profile.setMaxWidth(111.0);
         Display_Profile.setMaxHeight(31.0);
@@ -92,7 +92,7 @@ public class StudentProfileScreen {
         //Label - Student Information
         Label Current_day = new Label();
         Current_day.setId("Today");
-        Current_day.setLayoutX(46.0);
+        Current_day.setLayoutX(43.0);
         Current_day.setLayoutY(279.0);
         Current_day.setMinHeight(39.0);
         Current_day.setMinWidth(168.0);
