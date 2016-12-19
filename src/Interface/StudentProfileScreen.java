@@ -5,7 +5,11 @@ import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import DB.hsqldb.HSQLDB;
+import com.sun.xml.internal.bind.v2.runtime.property.ValueProperty;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -92,10 +96,7 @@ public class StudentProfileScreen {
         Current_day.setLayoutY(279.0);
         Current_day.setMinHeight(39.0);
         Current_day.setMinWidth(168.0);
-        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss yyyy-MM-dd");
-        Date date = new Date();
-        Current_day.setText(dateFormat.format(date).toString());
-        //Current_day.setTextAlignment(TextAlignment.CENTER);
+        Current_day.setTextAlignment(TextAlignment.CENTER);
         Label Student_Information = new Label();
         Student_Information.setId("Student_info");
         Student_Information.setLayoutX(45.0);
@@ -111,29 +112,17 @@ public class StudentProfileScreen {
         Rightside.setMinWidth(0.0);
         Rightside.prefHeight(160.0);
         Rightside.prefWidth(100.0);
-        //Search bar for already loan books
-        TextField Searchbar = new TextField();
-        Searchbar.setLayoutX(17.0);
-        Searchbar.setLayoutY(21.0);
-        Searchbar.prefHeight(31.0);
-        Searchbar.setMinWidth(418.0);
-        Image icon = new Image(StudentProfileScreen.class.getResourceAsStream("search.png"));
-        Button Run_Searching = new Button();
-        Run_Searching.setId("SearchButton");
-        Run_Searching.setGraphic(new ImageView(icon));
-        Run_Searching.setLayoutX(447.0);
-        Run_Searching.setLayoutY(21.0);
         //Pane of the table.
         ScrollPane scrollpane = new ScrollPane();
         scrollpane.setLayoutX(11.0);
-        scrollpane.setLayoutY(77.0);
+        scrollpane.setLayoutY(30.0);
         scrollpane.prefWidth(487.0);
-        scrollpane.prefHeight(407.0);
+        scrollpane.prefHeight(100.0);
         //The table
         AnchorPane table = new AnchorPane();
         table.minHeight(0.0);
         table.minWidth(0.0);
-        table.prefHeight(500.0);
+        table.prefHeight(400.0);
         table.prefWidth(469.0);
         TableColumn Material_ID = new TableColumn("Material ID");
         Material_ID.setId("Material_ID");
@@ -154,7 +143,7 @@ public class StudentProfileScreen {
         //Adding from inside-out
         table.getChildren().addAll(BorrowingBooks);
         scrollpane.setContent(table);
-        Rightside.getChildren().addAll(Searchbar, Run_Searching, scrollpane);
+        Rightside.getChildren().add(scrollpane);
         //</editor-fold>
 
         Student_ProfileLayout.getItems().addAll(Leftside,Rightside);
@@ -192,6 +181,34 @@ public class StudentProfileScreen {
             Platform.exit();
         });
         //</editor-fold>
+
+        Timer timer = new java.util.Timer();
+
+        timer.schedule(new TimerTask() {
+            public void run() {
+                Platform.runLater(new Runnable() {
+                    public void run() {
+                        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss yyyy-MM-dd");
+                        Date date = new Date();
+                        Current_day.setText(dateFormat.format(date));
+                    }
+                });
+            }
+        }, 0, 1000);
+/*
+        new Thread() {
+            public void run() {
+                //Do some stuff in another thread
+                Platform.runLater(new Runnable() {
+                    public void run() {
+                        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss yyyy-MM-dd");
+                        Date date = new Date();
+                        Current_day.setText(date.toString());
+                    }
+                });
+            }
+        }.start();
+*/
     }
 
 }
