@@ -10,11 +10,13 @@ import java.util.TimerTask;
 
 import DB.hsqldb.HSQLDB;
 import Models.Books;
+import com.sun.org.apache.bcel.internal.generic.RETURN;
 import com.sun.xml.internal.bind.v2.runtime.property.ValueProperty;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -122,12 +124,22 @@ public class StudentProfileScreen {
         //The table
         AnchorPane table = new AnchorPane();
         table.setLayoutX(11.0);
-        table.setLayoutY(30.0);
+        table.setLayoutY(15.0);
         table.minHeight(0.0);
         table.minWidth(0.0);
         table.prefHeight(400.0);
         table.prefWidth(469.0);
-
+        Button OpenBookSearch = new Button("Searching Window");
+        OpenBookSearch.setId("OpenBookSearch");
+        OpenBookSearch.setLayoutY(405.0);
+        OpenBookSearch.setLayoutX(22.0);
+        OpenBookSearch.setOnAction(event -> {
+            //if(BookSearch)
+        });
+        Button ReturnBooks = new Button("Return");
+        ReturnBooks.setId("ReturnBooks");
+        ReturnBooks.setLayoutY(405.0);
+        ReturnBooks.setLayoutX(380.0);
         TableView<Books> BorrowingBooks = new TableView<>();
         TableColumn<Books, Integer> MIDColumn = new TableColumn<>("Material ID");
         TableColumn<Books, String> titleColumn = new TableColumn<>("Title");
@@ -141,6 +153,7 @@ public class StudentProfileScreen {
         BorrowingBooks.getColumns().addAll(MIDColumn,titleColumn,duedateColumn);
         BorrowingBooks.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         BorrowingBooks.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        BorrowingBooks.setEditable(true);
         BorrowingBooks.setLayoutX(-3.0);
         BorrowingBooks.setLayoutY(-3.0);
         BorrowingBooks.prefHeight(500.0);
@@ -152,8 +165,25 @@ public class StudentProfileScreen {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        String finalMatrnr = Matrnr;
+        ReturnBooks.setOnAction(event -> {
+            Integer returnBooks_index = -1;
+            do{
+                returnBooks_index = BorrowingBooks.getSelectionModel().getSelectedIndex();
+                try {
+                    student.query("UPDATE MATERIAL SET REMAIN = REMAIN + 1 WHERE MATERIAL_ID = " + BorrowingBooks.getItems().get(returnBooks_index).getMaterial_id());
+                    student.query("DELETE FROM BORROW WHERE MATERIAL_ID = " + BorrowingBooks.getItems().get(returnBooks_index).getMaterial_id()
+                    + " AND MATRNR = " + finalMatrnr);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }while(BorrowingBooks.getSelectionModel().getSelectedIndex()!=returnBooks_index);
+            BorrowingBooks.getItems().removeAll(BorrowingBooks.getSelectionModel().getSelectedItems());
+        });
+
             //Adding from inside-out
-        table.getChildren().addAll(BorrowingBooks);
+        table.getChildren().addAll(BorrowingBooks,OpenBookSearch, ReturnBooks);
         Rightside.getChildren().add(table);
         //</editor-fold>
         Student_ProfileLayout.getItems().addAll(Leftside,Rightside);
