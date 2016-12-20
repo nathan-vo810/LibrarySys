@@ -168,17 +168,17 @@ public class StudentProfileScreen {
 
         String finalMatrnr = Matrnr;
         ReturnBooks.setOnAction(event -> {
-            Integer returnBooks_index = -1;
-            do{
-                returnBooks_index = BorrowingBooks.getSelectionModel().getSelectedIndex();
+            Integer[] integers = new Integer[BorrowingBooks.getSelectionModel().getSelectedIndices().size()];
+            BorrowingBooks.getSelectionModel().getSelectedIndices().toArray(integers);
+            for(Integer integer : integers){
                 try {
-                    student.query("UPDATE MATERIAL SET REMAIN = REMAIN + 1 WHERE MATERIAL_ID = " + BorrowingBooks.getItems().get(returnBooks_index).getMaterial_id());
-                    student.query("DELETE FROM BORROW WHERE MATERIAL_ID = " + BorrowingBooks.getItems().get(returnBooks_index).getMaterial_id()
+                    student.query("UPDATE MATERIAL SET REMAIN = REMAIN + 1 WHERE MATERIAL_ID = " + BorrowingBooks.getItems().get(integer).getMaterial_id());
+                    student.query("DELETE FROM BORROW WHERE MATERIAL_ID = " + BorrowingBooks.getItems().get(integer).getMaterial_id()
                     + " AND MATRNR = " + finalMatrnr);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-            }while(BorrowingBooks.getSelectionModel().getSelectedIndex()!=returnBooks_index);
+            }
             BorrowingBooks.getItems().removeAll(BorrowingBooks.getSelectionModel().getSelectedItems());
         });
 
