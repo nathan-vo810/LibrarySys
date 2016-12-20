@@ -26,6 +26,8 @@
     -fx-background-color: inherit;
 }
 
+#BorrowingBooks .table-column{
+}
 #Toggle_button.on {
     -fx-graphic: url("img/on_toggle.png");
 }

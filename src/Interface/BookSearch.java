@@ -91,9 +91,9 @@ public class BookSearch {
         try {
             String inputData = searchBox.getText();
             HSQLDB books = new HSQLDB(username, password);
-            ResultSet bookQuery = books.query("SELECT * FROM MATERIAL WHERE ISBN = '" + inputData +
-                                                                        "' OR NAME = '" + inputData +
-                                                                        "' OR AUTHOR = '" + inputData + "'");
+            ResultSet bookQuery = books.query("SELECT * FROM MATERIAL WHERE ISBN = '\" + inputData +\n" +
+                    "                                                                        \"' OR NAME = '\" + inputData +\n" +
+                    "                                                                        \"' OR AUTHOR = '\" + inputData + \"'");
             resultTable.setItems(getData(bookQuery));
         } catch (Exception e) {
             e.printStackTrace();
@@ -115,7 +115,7 @@ public class BookSearch {
                 Integer remain = booksData.getInt("remain");
 
                 //Add to list
-                booksList.add(new Books(title, isbn, author, remain));
+                booksList.add(new Books(title, isbn, author, remain, null, null));
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -9,11 +9,15 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import DB.hsqldb.HSQLDB;
+import Models.Books;
 import com.sun.xml.internal.bind.v2.runtime.property.ValueProperty;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -38,10 +42,12 @@ public class StudentProfileScreen {
         //<editor-fold desc="HSQLDB Student Instance">
         HSQLDB student = new HSQLDB(usernameInput, passwordInput);
         ResultSet Student_query = student.query("SELECT * FROM STUDENT WHERE LID = '" + usernameInput + "'");
+        String Matrnr = "";
         String Sname = "";
         String Information = "";
         while (Student_query.next()) {
             Sname = Student_query.getString("FName");
+            Matrnr = Student_query.getString("Matrnr");
             Information = "NAME: " + Student_query.getString("LName") + " " + Student_query.getString("FName") + "\n"
                     + "MAT: " + Student_query.getString("Matrnr") + "\n"
                     + "BIRTHDAY: " + Student_query.getString("DOB") + "\n"
@@ -112,47 +118,49 @@ public class StudentProfileScreen {
         Rightside.setMinWidth(0.0);
         Rightside.prefHeight(160.0);
         Rightside.prefWidth(100.0);
-        //Pane of the table.
-        ScrollPane scrollpane = new ScrollPane();
-        scrollpane.setLayoutX(11.0);
-        scrollpane.setLayoutY(30.0);
-        scrollpane.prefWidth(487.0);
-        scrollpane.prefHeight(100.0);
+
         //The table
         AnchorPane table = new AnchorPane();
+        table.setLayoutX(11.0);
+        table.setLayoutY(30.0);
         table.minHeight(0.0);
         table.minWidth(0.0);
         table.prefHeight(400.0);
         table.prefWidth(469.0);
-        TableColumn Material_ID = new TableColumn("Material ID");
-        Material_ID.setId("Material_ID");
-        Material_ID.setPrefWidth(111.0);
-        TableColumn Material_name = new TableColumn("Title");
-        Material_name.setId("Material_name");
-        Material_name.setPrefWidth(249.0);
-        TableColumn Duration = new TableColumn("Due Date");
-        Duration.setId("Due_date");
-        Duration.setPrefWidth(113.0);
-        TableView BorrowingBooks = new TableView();
-        BorrowingBooks.getColumns().addAll(Material_ID, Material_name, Duration);
+
+        TableView<Books> BorrowingBooks = new TableView<>();
+        TableColumn<Books, Integer> MIDColumn = new TableColumn<>("Material ID");
+        TableColumn<Books, String> titleColumn = new TableColumn<>("Title");
+        TableColumn<Books, String> duedateColumn = new TableColumn<>("Due Date");
+        MIDColumn.setPrefWidth(111.0);
+        titleColumn.setPrefWidth(249.0);
+        duedateColumn.setPrefWidth(113.0);
+        MIDColumn.setCellValueFactory(new PropertyValueFactory<>("material_id"));
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        duedateColumn.setCellValueFactory(new PropertyValueFactory<>("due_date"));
+        BorrowingBooks.getColumns().addAll(MIDColumn,titleColumn,duedateColumn);
         BorrowingBooks.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        BorrowingBooks.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         BorrowingBooks.setLayoutX(-3.0);
         BorrowingBooks.setLayoutY(-3.0);
         BorrowingBooks.prefHeight(500.0);
         BorrowingBooks.prefWidth(474.0);
-        //Adding from inside-out
+
+        ResultSet BorrowingQuery = student.query("SELECT * FROM MATERIAL JOIN BORROW ON (MATERIAL.MATERIAL_ID=BORROW.MATERIAL_ID) WHERE MATRNR = " + Matrnr);
+        try {
+            BorrowingBooks.setItems(getData(BorrowingQuery));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+            //Adding from inside-out
         table.getChildren().addAll(BorrowingBooks);
-        scrollpane.setContent(table);
-        Rightside.getChildren().add(scrollpane);
+        Rightside.getChildren().add(table);
         //</editor-fold>
-
         Student_ProfileLayout.getItems().addAll(Leftside,Rightside);
-
         Student_ProfileScene = new Scene(Student_ProfileLayout);
         Student_ProfileScene.getStylesheets().add(StudentProfileScreen.class.getResource("StudentProfile.css").toExternalForm());
         Student_ProfileWindow.setScene(Student_ProfileScene);;
         Student_ProfileWindow.show();
-
         //<editor-fold desc="Button set on action">
         Signout.setOnAction(event -> {
             try{
@@ -195,21 +203,30 @@ public class StudentProfileScreen {
                 });
             }
         }, 0, 1000);
-/*
-        new Thread() {
-            public void run() {
-                //Do some stuff in another thread
-                Platform.runLater(new Runnable() {
-                    public void run() {
-                        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss yyyy-MM-dd");
-                        Date date = new Date();
-                        Current_day.setText(date.toString());
-                    }
-                });
-            }
-        }.start();
-*/
+
     }
 
+    public static ObservableList<Books> getData(ResultSet BorrowingQuery) {
+        //Initialize Books list
+        ObservableList<Books> booksList = FXCollections.observableArrayList();
+
+        try {
+            while (BorrowingQuery.next()) {
+
+                //Get attributes
+                Integer mid= BorrowingQuery.getInt("material_id");
+                String title = BorrowingQuery.getString("name");
+                String duedate = BorrowingQuery.getString("borrow_duration");
+
+                //Add to list
+                booksList.add(new Books(title, null, null, null, mid, duedate));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return booksList;
+
+    }
 }
 
