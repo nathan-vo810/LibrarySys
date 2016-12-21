@@ -64,9 +64,7 @@ public class LoginScreen extends Application {
                         try {
                             primaryStage.close();
                             HSQLDB user = new HSQLDB(usernameInput.getText(), passwordInput.getText());
-                            BookSearch bookSearch = new BookSearch();
-                            bookSearch.displayBookSearch(usernameInput.getText(), passwordInput.getText(), user);
-                            StudentProfileScreen.displayStudentProfileScene(usernameInput.getText(), passwordInput.getText(), user, bookSearch);
+                            StudentProfileScreen.displayStudentProfileScene(usernameInput.getText(), passwordInput.getText(), user);
                         } catch (Exception e1) {
                             e1.printStackTrace();
                         }

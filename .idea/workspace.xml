@@ -2,7 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a41b3bcb-7167-4ae6-8b26-c37270e763c6" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/LibrarySys/Interface/BookSearch.class" afterPath="$PROJECT_DIR$/out/production/LibrarySys/Interface/BookSearch.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/LibrarySys/Interface/LoginScreen.class" afterPath="$PROJECT_DIR$/out/production/LibrarySys/Interface/LoginScreen.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/LibrarySys/Interface/RegisterScreen.class" afterPath="$PROJECT_DIR$/out/production/LibrarySys/Interface/RegisterScreen.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/LibrarySys/Interface/StudentProfileScreen$1$1.class" afterPath="$PROJECT_DIR$/out/production/LibrarySys/Interface/StudentProfileScreen$1$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/LibrarySys/Interface/StudentProfileScreen$1.class" afterPath="$PROJECT_DIR$/out/production/LibrarySys/Interface/StudentProfileScreen$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/LibrarySys/Interface/StudentProfileScreen.class" afterPath="$PROJECT_DIR$/out/production/LibrarySys/Interface/StudentProfileScreen.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examplefile.properties" afterPath="$PROJECT_DIR$/examplefile.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examplefile.script" afterPath="$PROJECT_DIR$/examplefile.script" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Interface/BookSearch.java" afterPath="$PROJECT_DIR$/src/Interface/BookSearch.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Interface/LoginScreen.java" afterPath="$PROJECT_DIR$/src/Interface/LoginScreen.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Interface/StudentProfileScreen.java" afterPath="$PROJECT_DIR$/src/Interface/StudentProfileScreen.java" />
     </list>
     <ignored path="LibrarySys.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -27,8 +38,8 @@
       <file leaf-file-name="LoginScreen.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Interface/LoginScreen.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="825">
-              <caret line="65" column="103" selection-start-line="65" selection-start-column="103" selection-end-line="65" selection-end-column="103" />
+            <state relative-caret-position="795">
+              <caret line="63" column="29" selection-start-line="63" selection-start-column="29" selection-end-line="63" selection-end-column="29" />
               <folding>
                 <element signature="e#746#747#0" expanded="true" />
                 <element signature="e#774#775#0" expanded="true" />
@@ -60,8 +71,8 @@
       <file leaf-file-name="StudentProfileScreen.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Interface/StudentProfileScreen.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1755">
-              <caret line="148" column="75" selection-start-line="148" selection-start-column="75" selection-end-line="148" selection-end-column="75" />
+            <state relative-caret-position="212">
+              <caret line="137" column="46" selection-start-line="137" selection-start-column="46" selection-end-line="137" selection-end-column="46" />
               <folding />
             </state>
           </provider>
@@ -90,9 +101,12 @@
       <file leaf-file-name="BookSearch.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Interface/BookSearch.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="37">
-              <caret line="66" column="57" selection-start-line="66" selection-start-column="57" selection-end-line="66" selection-end-column="57" />
-              <folding />
+            <state relative-caret-position="217">
+              <caret line="34" column="32" selection-start-line="34" selection-start-column="32" selection-end-line="34" selection-end-column="32" />
+              <folding>
+                <element signature="e#5169#5170#0" expanded="true" />
+                <element signature="e#5205#5206#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -629,9 +643,6 @@
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
   </component>
-  <component name="SvnConfiguration">
-    <configuration />
-  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="a41b3bcb-7167-4ae6-8b26-c37270e763c6" name="Default" comment="" />
@@ -650,12 +661,12 @@
       <workItem from="1482253391743" duration="4032000" />
       <workItem from="1482257832620" duration="2069000" />
       <workItem from="1482273460665" duration="3912000" />
-      <workItem from="1482319066265" duration="6220000" />
+      <workItem from="1482319066265" duration="6503000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="22612000" />
+    <option name="totallyTimeSpent" value="22895000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="25" width="1287" height="759" extended-state="0" />
@@ -738,7 +749,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1760">
           <caret line="95" column="130" selection-start-line="95" selection-start-column="130" selection-end-line="95" selection-end-column="130" />
-          <folding />
+          <folding>
+            <element signature="e#5169#5170#0" expanded="true" />
+            <element signature="e#5205#5206#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -788,7 +802,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#5169#5170#0" expanded="true" />
+            <element signature="e#5205#5206#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -854,7 +871,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1078">
           <caret line="64" column="60" selection-start-line="64" selection-start-column="60" selection-end-line="64" selection-end-column="60" />
-          <folding />
+          <folding>
+            <element signature="e#5169#5170#0" expanded="true" />
+            <element signature="e#5205#5206#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -904,7 +924,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1078">
           <caret line="64" column="60" selection-start-line="64" selection-start-column="60" selection-end-line="64" selection-end-column="60" />
-          <folding />
+          <folding>
+            <element signature="e#5169#5170#0" expanded="true" />
+            <element signature="e#5205#5206#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1069,8 +1092,8 @@
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_73/src.zip!/java/util/TimerTask.java" />
     <entry file="file://$PROJECT_DIR$/src/Interface/LoginScreen.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="825">
-          <caret line="65" column="103" selection-start-line="65" selection-start-column="103" selection-end-line="65" selection-end-column="103" />
+        <state relative-caret-position="795">
+          <caret line="63" column="29" selection-start-line="63" selection-start-column="29" selection-end-line="63" selection-end-column="29" />
           <folding>
             <element signature="e#746#747#0" expanded="true" />
             <element signature="e#774#775#0" expanded="true" />
@@ -1102,14 +1125,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Interface/StudentProfileScreen.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1755">
-          <caret line="148" column="75" selection-start-line="148" selection-start-column="75" selection-end-line="148" selection-end-column="75" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/examplefile.script">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
@@ -1132,11 +1147,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Interface/StudentProfileScreen.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="212">
+          <caret line="137" column="46" selection-start-line="137" selection-start-column="46" selection-end-line="137" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Interface/BookSearch.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="37">
-          <caret line="66" column="57" selection-start-line="66" selection-start-column="57" selection-end-line="66" selection-end-column="57" />
-          <folding />
+        <state relative-caret-position="217">
+          <caret line="34" column="32" selection-start-line="34" selection-start-column="32" selection-end-line="34" selection-end-column="32" />
+          <folding>
+            <element signature="e#5169#5170#0" expanded="true" />
+            <element signature="e#5205#5206#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

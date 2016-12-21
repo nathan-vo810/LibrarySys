@@ -39,7 +39,9 @@ import javafx.scene.shape.Circle;
 
 public class StudentProfileScreen {
 
-    public static void displayStudentProfileScene(String usernameInput, String passwordInput, HSQLDB user, BookSearch bookSearch) throws Exception {
+    public static void displayStudentProfileScene(String usernameInput, String passwordInput, HSQLDB user) throws Exception {
+        BookSearch bookSearch = new BookSearch();
+        bookSearch.displayBookSearch(usernameInput,passwordInput,user);
         Scene Student_ProfileScene;
         //<editor-fold desc="HSQLDB Student Instance">
         ResultSet Student_query = user.query("SELECT * FROM STUDENT WHERE LID = '" + usernameInput + "'");
@@ -133,7 +135,7 @@ public class StudentProfileScreen {
         OpenBookSearch.setLayoutY(405.0);
         OpenBookSearch.setLayoutX(22.0);
         OpenBookSearch.setOnAction(event -> {
-            //if(BookSearch)
+            BookSearch.displayBookSearch(usernameInput,passwordInput,user);
         });
         Button ReturnBooks = new Button("Return");
         ReturnBooks.setId("ReturnBooks");
@@ -194,7 +196,8 @@ public class StudentProfileScreen {
         Signout.setOnAction(event -> {
             try{
                 user.shutdown();
-                Platform.exit();
+                Student_ProfileWindow.close();
+                bookSearch.close(bookSearch.searchWindow);
             } catch (Exception e){
                 e.printStackTrace();
             }
@@ -217,6 +220,8 @@ public class StudentProfileScreen {
         Student_ProfileWindow.setOnCloseRequest(event -> {
             try{
                 user.shutdown();
+                Student_ProfileWindow.close();
+                bookSearch.close(bookSearch.searchWindow);
             } catch (Exception e){
                 e.printStackTrace();
             }

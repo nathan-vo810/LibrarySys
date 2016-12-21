@@ -24,9 +24,17 @@ import java.sql.SQLException;
  */
 public class BookSearch {
 
-    public static void displayBookSearch(String username, String password, HSQLDB user) throws Exception {
+    static Stage searchWindow = new Stage();
+    public static void displayBookSearch(String username, String password, HSQLDB user) {
 
-        ResultSet studentInfo = user.query("SELECT * FROM STUDENT WHERE LID = '" + username + "'");
+
+        ResultSet studentInfo = null;
+        try {
+            studentInfo = user.query("SELECT * FROM STUDENT WHERE LID = '" + username + "'");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         Students currentStudent = new Students(studentInfo);
 
         //Search Panel
@@ -89,7 +97,6 @@ public class BookSearch {
         searchLayout.setAlignment(Pos.TOP_CENTER);
 
         Scene searchScene = new Scene(searchLayout);
-        Stage searchWindow = new Stage();
         searchWindow.setTitle("Search");
         searchWindow.setScene(searchScene);
         searchWindow.setHeight(700);
@@ -101,8 +108,10 @@ public class BookSearch {
     public static void searchBook(TextField searchBox, TableView<Books> resultTable, HSQLDB user) {
         try {
             String inputData = searchBox.getText();
-            ResultSet bookQuery = user.query("SELECT * FROM MATERIAL WHERE ISBN = '" + inputData +"'\n" +" OR NAME = '" + inputData +"'\n" +" OR AUTHOR = '" + inputData + "'");
-            resultTable.setItems(getData(bookQuery));
+            if(inputData.length()>=3) {
+                ResultSet bookQuery = user.query("SELECT * FROM MATERIAL WHERE ISBN LIKE '%" + inputData + "%'\n" + " OR NAME LIKE '%" + inputData + "%'\n" + " OR AUTHOR LIKE '%" + inputData + "%'");
+                resultTable.setItems(getData(bookQuery));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -120,6 +129,7 @@ public class BookSearch {
                 String isbn = booksData.getString("isbn");
                 String title = booksData.getString("name");
                 String author = booksData.getString("author");
+
                 Integer remain = booksData.getInt("remain");
                 Integer material_id = booksData.getInt("material_id");
 
@@ -134,7 +144,9 @@ public class BookSearch {
     }
 
 
-    //public static void reserveBook(TableView<Books> resultTable) {}
+    public static void close(Stage searchWindow){
+        searchWindow.close();
+    }
 
 
     public static void reserveBook(TableView<Books> resultTable, HSQLDB user, Students currentStudent) {
