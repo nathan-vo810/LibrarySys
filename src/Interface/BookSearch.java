@@ -64,7 +64,7 @@ public class BookSearch {
 
         resultTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-        searchBtn.setOnAction(e->searchBook(searchBox, username, password, resultTable, user));
+        searchBtn.setOnAction(e->searchBook(searchBox, resultTable, user));
 
         Button reserveBtn = new Button();
         reserveBtn.setText("Reserve");
@@ -98,7 +98,7 @@ public class BookSearch {
         searchWindow.show();
     }
 
-    public static void searchBook(TextField searchBox, String username, String password, TableView<Books> resultTable, HSQLDB user) {
+    public static void searchBook(TextField searchBox, TableView<Books> resultTable, HSQLDB user) {
         try {
             String inputData = searchBox.getText();
             ResultSet bookQuery = user.query("SELECT * FROM MATERIAL WHERE ISBN = '" + inputData +"'\n" +" OR NAME = '" + inputData +"'\n" +" OR AUTHOR = '" + inputData + "'");
@@ -141,23 +141,15 @@ public class BookSearch {
 
         Integer[] indices = new Integer[resultTable.getSelectionModel().getSelectedIndices().size()];
         resultTable.getSelectionModel().getSelectedIndices().toArray(indices);
-        for(Integer index : indices){
+        for (Integer index : indices) {
             try {
                 int bookID = resultTable.getItems().get(index).getMaterial_id();
                 String MatrNr = currentStudent.getMatrNr();
-                user.query("UPDATE MATERIAL SET REMAIN = REMAIN -1 WHERE MATERIAL_ID = " + bookID);
-                user.query("INSERT INTO BORROW VALUES (" + MatrNr + "," + bookID +")");
+                user.query("UPDATE MATERIAL SET REMAIN = REMAIN - 1 WHERE MATERIAL_ID = " + bookID);
+                user.query("INSERT INTO BORROW VALUES (" + MatrNr + "," + bookID + ")");
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-
-    /*
-    ObservableList<Books> list = resultTable.getSelectionModel().getSelectedItems();
-    for (Books single : list) {
-        System.out.print(single);
     }
-    */
-    }
-
 }
