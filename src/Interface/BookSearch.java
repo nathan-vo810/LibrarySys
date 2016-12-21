@@ -61,6 +61,11 @@ public class BookSearch {
 
         searchBtn.setOnAction(e->searchBook(searchBox, username, password, resultTable));
 
+        Button reserveBtn = new Button();
+        reserveBtn.setText("Reserve");
+
+        reserveBtn.setOnAction(e->reserveBook(resultTable));
+
         GridPane searchLayout = new GridPane();
         searchLayout.setPadding(new Insets(10, 10, 10, 10));
         searchLayout.setVgap(10);
@@ -69,12 +74,13 @@ public class BookSearch {
         GridPane.setConstraints(searchPane,0,0);
         GridPane.setConstraints(note,0,1);
         GridPane.setConstraints(resultTable,0,2);
+        GridPane.setConstraints(reserveBtn,0,3);
         //searchLayout.setHalignment(searchPane,HPos.CENTER);
         searchLayout.setHalignment(note,HPos.CENTER);
         //searchLayout.setHalignment(resultTable,HPos.CENTER);
 
 
-        searchLayout.getChildren().addAll(searchPane,note,resultTable);
+        searchLayout.getChildren().addAll(searchPane,note,resultTable,reserveBtn);
         searchLayout.setAlignment(Pos.TOP_CENTER);
 
         Scene searchScene = new Scene(searchLayout);
@@ -120,6 +126,17 @@ public class BookSearch {
         }
 
         return booksList;
+    }
+
+    public static void reserveBook(TableView<Books> resultTable) {
+        ObservableList<Books> selectedBooks = resultTable.getSelectionModel().getSelectedItems();
+        for (Books singleBook: selectedBooks) {
+            int remain = singleBook.getRemain();
+            int materialID = singleBook.getMaterial_id();
+            HSQLDB books = new HSQLDB(username, password);
+            books.query("UPDATE MATERIAL SET REMAIN = REMAIN + 1 WHERE MATERIAL_ID = " + materialID);
+            books.query("INSERT INTO BORROW VALUES (" + matrNR + "," + materialID + ")");
+        }
 
     }
 
