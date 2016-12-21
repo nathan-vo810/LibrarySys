@@ -15,9 +15,12 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.geometry.*;
 
+import javafx.application.Platform;
+
 import java.security.PublicKey;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.TimerTask;
 
 /**
  * Created by NhatAnh on 12/11/16.
@@ -25,6 +28,9 @@ import java.sql.SQLException;
 public class BookSearch {
 
     static Stage searchWindow = new Stage();
+    static TextField searchBox = new TextField();
+    static TableView<Books> resultTable = new TableView<>();
+
     public static void displayBookSearch(String username, String password, HSQLDB user) {
 
 
@@ -38,7 +44,6 @@ public class BookSearch {
         Students currentStudent = new Students(studentInfo);
 
         //Search Panel
-        TextField searchBox = new TextField();
         searchBox.setMinWidth(650);
 
         Button searchBtn = new Button();
@@ -52,7 +57,6 @@ public class BookSearch {
         Label note = new Label("Search by Title, ISBN or Author");
 
         //Result table
-        TableView<Books> resultTable = new TableView<>();
         resultTable.setMinHeight(500);
 
         TableColumn<Books, String> isbnCol = new TableColumn<>("ISBN");
@@ -72,12 +76,20 @@ public class BookSearch {
 
         resultTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-        searchBtn.setOnAction(e->searchBook(searchBox, resultTable, user));
+        searchBtn.setOnAction(e-> searchBook(user));
 
         Button reserveBtn = new Button();
         reserveBtn.setText("Reserve");
 
-        reserveBtn.setOnAction(e->reserveBook(resultTable,user,currentStudent));
+        reserveBtn.setOnAction(e->{
+            reserveBook(resultTable,user,currentStudent);
+            try {
+                StudentProfileScreen.displayBorrowed(user,currentStudent);
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+            searchBook(user);
+        });
 
         GridPane searchLayout = new GridPane();
         searchLayout.setPadding(new Insets(10, 10, 10, 10));
@@ -105,7 +117,8 @@ public class BookSearch {
         searchWindow.show();
     }
 
-    public static void searchBook(TextField searchBox, TableView<Books> resultTable, HSQLDB user) {
+
+    public static void searchBook(HSQLDB user) {
         try {
             String inputData = searchBox.getText();
             if(inputData.length()>=3) {

@@ -10,6 +10,7 @@ import java.util.TimerTask;
 
 import DB.hsqldb.HSQLDB;
 import Models.Books;
+import Models.Students;
 import com.sun.org.apache.bcel.internal.generic.RETURN;
 import com.sun.xml.internal.bind.v2.runtime.property.ValueProperty;
 import javafx.application.Platform;
@@ -39,23 +40,26 @@ import javafx.scene.shape.Circle;
 
 public class StudentProfileScreen {
 
+    static TableView<Books> BorrowingBooks = new TableView<>();
+
     public static void displayStudentProfileScene(String usernameInput, String passwordInput, HSQLDB user) throws Exception {
-        BookSearch bookSearch = new BookSearch();
-        bookSearch.displayBookSearch(usernameInput,passwordInput,user);
+
+
+        Timer timer = new java.util.Timer();
+
+        //BookSearch bookSearch = new BookSearch();
+        //bookSearch.displayBookSearch(usernameInput,passwordInput,user);
         Scene Student_ProfileScene;
         //<editor-fold desc="HSQLDB Student Instance">
         ResultSet Student_query = user.query("SELECT * FROM STUDENT WHERE LID = '" + usernameInput + "'");
-        String Matrnr = "";
-        String Sname = "";
-        String Information = "";
-        while (Student_query.next()) {
-            Sname = Student_query.getString("FName");
-            Matrnr = Student_query.getString("Matrnr");
-            Information = "NAME: " + Student_query.getString("LName") + " " + Student_query.getString("FName") + "\n"
-                    + "MAT: " + Student_query.getString("Matrnr") + "\n"
-                    + "BIRTHDAY: " + Student_query.getString("DOB") + "\n"
-                    + "PHONE: " + Student_query.getString("Phone");
-        }
+        Students currentStudent = new Students(Student_query);
+
+        String Matrnr = currentStudent.getMatrNr();
+        String Sname = currentStudent.getFname() + " " + currentStudent.getLname();
+        String DOB = currentStudent.getDOB();
+        String Phone = currentStudent.getPhone();
+        String Information = "Name: " + Sname + "\nMatrNr: " + Matrnr + "\nBirthday: " + DOB + "\nPhone: " + Phone;
+
         //</editor-fold>
         Stage Student_ProfileWindow = new Stage();
         Student_ProfileWindow.setTitle(Sname);
@@ -135,13 +139,17 @@ public class StudentProfileScreen {
         OpenBookSearch.setLayoutY(405.0);
         OpenBookSearch.setLayoutX(22.0);
         OpenBookSearch.setOnAction(event -> {
-            BookSearch.displayBookSearch(usernameInput,passwordInput,user);
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    BookSearch.displayBookSearch(usernameInput,passwordInput,user);
+                }
+            });
         });
         Button ReturnBooks = new Button("Return");
         ReturnBooks.setId("ReturnBooks");
         ReturnBooks.setLayoutY(405.0);
         ReturnBooks.setLayoutX(380.0);
-        TableView<Books> BorrowingBooks = new TableView<>();
         TableColumn<Books, Integer> MIDColumn = new TableColumn<>("Material ID");
         TableColumn<Books, String> titleColumn = new TableColumn<>("Title");
         TableColumn<Books, String> duedateColumn = new TableColumn<>("Due Date");
@@ -160,27 +168,12 @@ public class StudentProfileScreen {
         BorrowingBooks.prefHeight(500.0);
         BorrowingBooks.prefWidth(474.0);
 
-        ResultSet BorrowingQuery = user.query("SELECT * FROM MATERIAL JOIN BORROW ON (MATERIAL.MATERIAL_ID=BORROW.MATERIAL_ID) WHERE MATRNR = " + Matrnr);
-        try {
-            BorrowingBooks.setItems(getData(BorrowingQuery));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        displayBorrowed(user, currentStudent);
 
         String finalMatrnr = Matrnr;
         ReturnBooks.setOnAction(event -> {
-            Integer[] integers = new Integer[BorrowingBooks.getSelectionModel().getSelectedIndices().size()];
-            BorrowingBooks.getSelectionModel().getSelectedIndices().toArray(integers);
-            for(Integer integer : integers){
-                try {
-                    user.query("UPDATE MATERIAL SET REMAIN = REMAIN + 1 WHERE MATERIAL_ID = " + BorrowingBooks.getItems().get(integer).getMaterial_id());
-                    user.query("DELETE FROM BORROW WHERE MATERIAL_ID = " + BorrowingBooks.getItems().get(integer).getMaterial_id()
-                    + " AND MATRNR = " + finalMatrnr);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            BorrowingBooks.getItems().removeAll(BorrowingBooks.getSelectionModel().getSelectedItems());
+            returnBooks(user, currentStudent);
+            BookSearch.searchBook(user);
         });
 
             //Adding from inside-out
@@ -197,7 +190,8 @@ public class StudentProfileScreen {
             try{
                 user.shutdown();
                 Student_ProfileWindow.close();
-                bookSearch.close(bookSearch.searchWindow);
+                timer.cancel();
+                //bookSearch.close(bookSearch.searchWindow);
             } catch (Exception e){
                 e.printStackTrace();
             }
@@ -221,14 +215,14 @@ public class StudentProfileScreen {
             try{
                 user.shutdown();
                 Student_ProfileWindow.close();
-                bookSearch.close(bookSearch.searchWindow);
+                timer.cancel();
+                //bookSearch.close(bookSearch.searchWindow);
             } catch (Exception e){
                 e.printStackTrace();
             }
         });
         //</editor-fold>
 
-        Timer timer = new java.util.Timer();
 
         timer.schedule(new TimerTask() {
             public void run() {
@@ -242,6 +236,32 @@ public class StudentProfileScreen {
             }
         }, 0, 1000);
 
+    }
+
+    public static void returnBooks(HSQLDB user, Students currentStudent) {
+        Integer[] integers = new Integer[BorrowingBooks.getSelectionModel().getSelectedIndices().size()];
+        BorrowingBooks.getSelectionModel().getSelectedIndices().toArray(integers);
+        String MatrNr = currentStudent.getMatrNr();
+        for(Integer integer : integers){
+            try {
+                user.query("UPDATE MATERIAL SET REMAIN = REMAIN + 1 WHERE MATERIAL_ID = " + BorrowingBooks.getItems().get(integer).getMaterial_id());
+                user.query("DELETE FROM BORROW WHERE MATERIAL_ID = " + BorrowingBooks.getItems().get(integer).getMaterial_id()
+                        + " AND MATRNR = " + MatrNr);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        BorrowingBooks.getItems().removeAll(BorrowingBooks.getSelectionModel().getSelectedItems());
+    }
+
+    public static void displayBorrowed(HSQLDB user, Students currentStudent) throws Exception {
+        String MatrNr = currentStudent.getMatrNr();
+        ResultSet BorrowingQuery = user.query("SELECT * FROM MATERIAL JOIN BORROW ON (MATERIAL.MATERIAL_ID=BORROW.MATERIAL_ID) WHERE MATRNR = " + MatrNr);
+        try {
+            BorrowingBooks.setItems(getData(BorrowingQuery));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static ObservableList<Books> getData(ResultSet BorrowingQuery) {
