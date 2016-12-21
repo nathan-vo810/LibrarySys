@@ -22,7 +22,7 @@ import java.sql.SQLException;
  * Created by NhatAnh on 12/11/16.
  */
 public class BookSearch {
-
+    static Stage searchWindow = new Stage();
     public static void displayBookSearch(String username, String password, HSQLDB user) {
 
         //Search Panel
@@ -79,7 +79,6 @@ public class BookSearch {
         searchLayout.setAlignment(Pos.TOP_CENTER);
 
         Scene searchScene = new Scene(searchLayout);
-        Stage searchWindow = new Stage();
         searchWindow.setTitle("Search");
         searchWindow.setScene(searchScene);
         searchWindow.setHeight(700);
@@ -91,8 +90,10 @@ public class BookSearch {
     public static void searchBook(TextField searchBox, String username, String password, TableView<Books> resultTable, HSQLDB user) {
         try {
             String inputData = searchBox.getText();
-            ResultSet bookQuery = user.query("SELECT * FROM MATERIAL WHERE ISBN = '" + inputData +"'\n" +" OR NAME = '" + inputData +"'\n" +" OR AUTHOR = '" + inputData + "'");
-            resultTable.setItems(getData(bookQuery));
+            if(inputData.length()>=3) {
+                ResultSet bookQuery = user.query("SELECT * FROM MATERIAL WHERE ISBN LIKE '%" + inputData + "%'\n" + " OR NAME LIKE '%" + inputData + "%'\n" + " OR AUTHOR LIKE '%" + inputData + "%'");
+                resultTable.setItems(getData(bookQuery));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -122,8 +123,7 @@ public class BookSearch {
         return booksList;
     }
 
-        public static void close(){
-
+    public static void close(Stage searchWindow){
+        searchWindow.close();
     }
-
 }
