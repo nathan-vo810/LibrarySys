@@ -20,6 +20,8 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.geometry.*;
 
+import java.awt.print.Book;
+
 public class LoginScreen extends Application {
 
 
@@ -59,10 +61,12 @@ public class LoginScreen extends Application {
                     loginStatus.setText(text);
 
                     if (text == "Success") {
-                        primaryStage.close();
                         try {
-                            BookSearch.displayBookSearch(usernameInput.getText(), passwordInput.getText());
-                            StudentProfileScreen.displayStudentProfileScene(usernameInput.getText(), passwordInput.getText());
+                            primaryStage.close();
+                            HSQLDB user = new HSQLDB(usernameInput.getText(), passwordInput.getText());
+                            BookSearch bookSearch = new BookSearch();
+                            bookSearch.displayBookSearch(usernameInput.getText(), passwordInput.getText(), user);
+                            StudentProfileScreen.displayStudentProfileScene(usernameInput.getText(), passwordInput.getText(), user, bookSearch);
                         } catch (Exception e1) {
                             e1.printStackTrace();
                         }

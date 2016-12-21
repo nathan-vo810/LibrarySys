@@ -39,11 +39,10 @@ import javafx.scene.shape.Circle;
 
 public class StudentProfileScreen {
 
-    public static void displayStudentProfileScene(String usernameInput, String passwordInput) throws Exception {
+    public static void displayStudentProfileScene(String usernameInput, String passwordInput, HSQLDB user, BookSearch bookSearch) throws Exception {
         Scene Student_ProfileScene;
         //<editor-fold desc="HSQLDB Student Instance">
-        HSQLDB student = new HSQLDB(usernameInput, passwordInput);
-        ResultSet Student_query = student.query("SELECT * FROM STUDENT WHERE LID = '" + usernameInput + "'");
+        ResultSet Student_query = user.query("SELECT * FROM STUDENT WHERE LID = '" + usernameInput + "'");
         String Matrnr = "";
         String Sname = "";
         String Information = "";
@@ -159,7 +158,7 @@ public class StudentProfileScreen {
         BorrowingBooks.prefHeight(500.0);
         BorrowingBooks.prefWidth(474.0);
 
-        ResultSet BorrowingQuery = student.query("SELECT * FROM MATERIAL JOIN BORROW ON (MATERIAL.MATERIAL_ID=BORROW.MATERIAL_ID) WHERE MATRNR = " + Matrnr);
+        ResultSet BorrowingQuery = user.query("SELECT * FROM MATERIAL JOIN BORROW ON (MATERIAL.MATERIAL_ID=BORROW.MATERIAL_ID) WHERE MATRNR = " + Matrnr);
         try {
             BorrowingBooks.setItems(getData(BorrowingQuery));
         } catch (Exception e) {
@@ -172,8 +171,8 @@ public class StudentProfileScreen {
             BorrowingBooks.getSelectionModel().getSelectedIndices().toArray(integers);
             for(Integer integer : integers){
                 try {
-                    student.query("UPDATE MATERIAL SET REMAIN = REMAIN + 1 WHERE MATERIAL_ID = " + BorrowingBooks.getItems().get(integer).getMaterial_id());
-                    student.query("DELETE FROM BORROW WHERE MATERIAL_ID = " + BorrowingBooks.getItems().get(integer).getMaterial_id()
+                    user.query("UPDATE MATERIAL SET REMAIN = REMAIN + 1 WHERE MATERIAL_ID = " + BorrowingBooks.getItems().get(integer).getMaterial_id());
+                    user.query("DELETE FROM BORROW WHERE MATERIAL_ID = " + BorrowingBooks.getItems().get(integer).getMaterial_id()
                     + " AND MATRNR = " + finalMatrnr);
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -194,11 +193,11 @@ public class StudentProfileScreen {
         //<editor-fold desc="Button set on action">
         Signout.setOnAction(event -> {
             try{
-                student.shutdown();
+                user.shutdown();
+                Platform.exit();
             } catch (Exception e){
                 e.printStackTrace();
             }
-            Platform.exit();
         });
 
         String finalInformation = Information;
@@ -216,7 +215,11 @@ public class StudentProfileScreen {
         });
 
         Student_ProfileWindow.setOnCloseRequest(event -> {
-            Platform.exit();
+            try{
+                user.shutdown();
+            } catch (Exception e){
+                e.printStackTrace();
+            }
         });
         //</editor-fold>
 
