@@ -14,6 +14,7 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.geometry.*;
 
+import java.security.PublicKey;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -22,7 +23,7 @@ import java.sql.SQLException;
  */
 public class BookSearch {
 
-    public static void displayBookSearch(String username, String password) {
+    public static void displayBookSearch(String username, String password, HSQLDB user) {
 
         //Search Panel
         TextField searchBox = new TextField();
@@ -59,7 +60,7 @@ public class BookSearch {
 
         resultTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-        searchBtn.setOnAction(e->searchBook(searchBox, username, password, resultTable));
+        searchBtn.setOnAction(e->searchBook(searchBox, username, password, resultTable, user));
 
         Button reserveBtn = new Button();
         reserveBtn.setText("Reserve");
@@ -93,11 +94,10 @@ public class BookSearch {
         searchWindow.show();
     }
 
-    public static void searchBook(TextField searchBox, String username, String password, TableView<Books> resultTable) {
+    public static void searchBook(TextField searchBox, String username, String password, TableView<Books> resultTable, HSQLDB user) {
         try {
             String inputData = searchBox.getText();
-            HSQLDB books = new HSQLDB(username, password);
-            ResultSet bookQuery = books.query("SELECT * FROM MATERIAL WHERE ISBN = '" + inputData +"'\n" +" OR NAME = '" + inputData +"'\n" +" OR AUTHOR = '" + inputData + "'");
+            ResultSet bookQuery = user.query("SELECT * FROM MATERIAL WHERE ISBN = '" + inputData +"'\n" +" OR NAME = '" + inputData +"'\n" +" OR AUTHOR = '" + inputData + "'");
             resultTable.setItems(getData(bookQuery));
         } catch (Exception e) {
             e.printStackTrace();
@@ -128,9 +128,13 @@ public class BookSearch {
         return booksList;
     }
 
+
+    public static void reserveBook(TableView<Books> resultTable) {}
+
+    /*
     public static void reserveBook(TableView<Books> resultTable) {
         ObservableList<Books> selectedBooks = resultTable.getSelectionModel().getSelectedItems();
-        for (Books singleBook: selectedBooks) {
+        for (Books singleBook : selectedBooks) {
             int remain = singleBook.getRemain();
             int materialID = singleBook.getMaterial_id();
             HSQLDB books = new HSQLDB(username, password);
@@ -139,5 +143,5 @@ public class BookSearch {
         }
 
     }
-
+    */
 }
