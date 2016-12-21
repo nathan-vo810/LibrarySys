@@ -2,6 +2,7 @@ package Interface;
 
 import DB.hsqldb.HSQLDB;
 import Models.Books;
+import Models.Students;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,8 +23,16 @@ import java.sql.SQLException;
  * Created by NhatAnh on 12/11/16.
  */
 public class BookSearch {
+<<<<<<< HEAD
     static Stage searchWindow = new Stage();
     public static void displayBookSearch(String username, String password, HSQLDB user) {
+=======
+
+    public static void displayBookSearch(String username, String password, HSQLDB user) throws Exception {
+
+        ResultSet studentInfo = user.query("SELECT * FROM STUDENT WHERE LID = '" + username + "'");
+        Students currentStudent = new Students(studentInfo);
+>>>>>>> origin/master
 
         //Search Panel
         TextField searchBox = new TextField();
@@ -65,7 +74,11 @@ public class BookSearch {
         Button reserveBtn = new Button();
         reserveBtn.setText("Reserve");
 
+<<<<<<< HEAD
         //reserveBtn.setOnAction(e->reserveBook(resultTable));
+=======
+        reserveBtn.setOnAction(e->reserveBook(resultTable,user,currentStudent));
+>>>>>>> origin/master
 
         GridPane searchLayout = new GridPane();
         searchLayout.setPadding(new Insets(10, 10, 10, 10));
@@ -119,9 +132,10 @@ public class BookSearch {
                 String author = booksData.getString("author");
 
                 Integer remain = booksData.getInt("remain");
+                Integer material_id = booksData.getInt("material_id");
 
                 //Add to list
-                booksList.add(new Books(title, isbn, author, remain, null, null));
+                booksList.add(new Books(title, isbn, author, remain, material_id ,null));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -130,8 +144,37 @@ public class BookSearch {
         return booksList;
     }
 
+<<<<<<< HEAD
     public static void close(Stage searchWindow){
         searchWindow.close();
     }
+=======
+
+    //public static void reserveBook(TableView<Books> resultTable) {}
+
+
+    public static void reserveBook(TableView<Books> resultTable, HSQLDB user, Students currentStudent) {
+
+        Integer[] indices = new Integer[resultTable.getSelectionModel().getSelectedIndices().size()];
+        resultTable.getSelectionModel().getSelectedIndices().toArray(indices);
+        for(Integer index : indices){
+            try {
+                int bookID = resultTable.getItems().get(index).getMaterial_id();
+                String MatrNr = currentStudent.getMatrNr();
+                user.query("UPDATE MATERIAL SET REMAIN = REMAIN -1 WHERE MATERIAL_ID = " + bookID);
+                user.query("INSERT INTO BORROW VALUES (" + MatrNr + "," + bookID +")");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+    /*
+    ObservableList<Books> list = resultTable.getSelectionModel().getSelectedItems();
+    for (Books single : list) {
+        System.out.print(single);
+    }
+    */
+    }
+>>>>>>> origin/master
 
 }

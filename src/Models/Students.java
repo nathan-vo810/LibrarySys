@@ -1,13 +1,33 @@
 package Models;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
  * Created by NhatAnh on 12/21/16.
  */
 public class Students {
     private String Lname, Fname, LID, DOB, Phone, Address;
-    private int MatrNr;
+    private String MatrNr;
 
-    public Students(String lname, String fname, String LID, String DOB, String phone, String address, int matrNr) {
+    public Students(ResultSet studentInfo) {
+        try {
+            while (studentInfo.next()) {
+                this.Lname = studentInfo.getString("LName");
+                this.Fname = studentInfo.getString("FName");
+                this.LID = studentInfo.getString("LID");
+                this.DOB = studentInfo.getString("DOB");
+                this.Phone = studentInfo.getString("Phone");
+                this.Address = studentInfo.getString("Address");
+                this.MatrNr = studentInfo.getString("MatrNr");
+            }
+            //new Students(Lname,Fname,LID, DOB, Phone, Address, MatrNr);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Students(String lname, String fname, String LID, String DOB, String phone, String address, String matrNr) {
         Lname = lname;
         Fname = fname;
         this.LID = LID;
@@ -65,11 +85,11 @@ public class Students {
         Address = address;
     }
 
-    public int getMatrNr() {
+    public String getMatrNr() {
         return MatrNr;
     }
 
-    public void setMatrNr(int matrNr) {
+    public void setMatrNr(String matrNr) {
         MatrNr = matrNr;
     }
 }
