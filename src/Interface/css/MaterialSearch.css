@@ -1,0 +1,19 @@
+.root {
+    -fx-pref-width: 800;
+    -fx-pref-height: 600;
+}
+
+#searchBox {
+    -fx-pref-width: 650;
+}
+
+#searchPane {
+    -fx-padding: 10 10 10 10;
+    -fx-spacing: 10;
+}
+
+#searchLayout {
+    -fx-spacing: 10 10 10 10;
+    -fx-vgap: 10;  -fx-hgap: 8;
+    -fx-alignment: top-center;
+}

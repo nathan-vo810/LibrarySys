@@ -1,0 +1,23 @@
+#root{
+    -fx-background-color: inherit;
+}
+#leftpane{
+    -fx-background-color: inherit;
+    -fx-pref-width: 133;
+    -fx-pref-height: 140;
+}
+#rightpane{
+    -fx-background-color: inherit;
+    -fx-pref-width: 331;
+    -fx-pref-height: 180;
+}
+#error_identification{
+    -fx-background-color: inherit;
+    -fx-text-fill: blue;
+    -fx-font-size: 24px;
+}
+#error_solution{
+    -fx-background-color: inherit;
+    -fx-text-fill: black;
+    -fx-font-size: 16px;
+}

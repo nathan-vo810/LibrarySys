@@ -1,0 +1,61 @@
+.root {
+    -fx-background-image: url("../img/LoginBackground.jpg");
+    -fx-background-size: stretch;
+    -fx-pref-width: 550;
+    -fx-pref-height: 400;
+}
+
+#welcome{
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+#loginStatus{
+    -fx-text-fill: tomato;
+    -fx-font-style: italic;
+}
+
+#usernameInput{
+    -fx-max-width: 250;
+    -fx-prompt-text: Username;
+}
+
+#passwordInput{
+    -fx-max-width: 250;
+    -fx-prompt-text: Password;
+}
+
+#loginLayout{
+    -fx-padding: 10 10 10 10;
+    -fx-vgap: 10;
+    -fx-hgap: 8;
+    -fx-alignment: center-right;
+}
+
+.button {
+    -fx-font-size: 12;
+    -fx-font-weight: bold;
+    -fx-max-width: 250px;
+}
+
+#loginLayout {
+    -fx-alignment: center-right;
+}
+
+#loginBtn {
+    -fx-text-fill: azure;
+    -fx-background-color: dodgerblue;
+}
+
+#loginBtn:hover {
+    -fx-background-color: deepskyblue;
+}
+
+#registerBtn {
+    -fx-text-fill: azure;
+    -fx-background-color: mediumseagreen;
+}
+
+#registerBtn:hover {
+    -fx-background-color: mediumspringgreen;
+}

@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import Interface.CryptWithMD5;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,21 +21,20 @@ public class HSQLDB extends DB {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HSQLDB.class);
 
-	public HSQLDB(String username, String password) throws Exception {
-		super();
-		Class.forName("org.hsqldb.jdbcDriver");
-		logger.info("Connect to database");
-		try {
-			connection = DriverManager.getConnection("jdbc:hsqldb:"
-							+ "examplefile",    // filename
+    public HSQLDB(String username, String password) throws Exception {
+        super();
+        Class.forName("org.hsqldb.jdbcDriver");
+        logger.info("Connect to database");
+        try {
+            connection = DriverManager.getConnection("jdbc:hsqldb:lib/ldb",    // filename
 					username,            // username
-					password);        // password
-			logger.trace("Connection set");
-		} catch (Exception e) {
-			logger.error("No connection!");
-			throw new Exception();
-		}
-	}
+					CryptWithMD5.cryptWithMD5(password));        // password
+            logger.trace("Connection set");
+        } catch (Exception e) {
+            logger.error("No connection!");
+            throw new Exception();
+        }
+    }
 /*
 	public static HSQLDB getInstance() throws Exception {	// Singleton-Pattern
 		logger.trace("Instance requested");
@@ -78,7 +78,7 @@ public class HSQLDB extends DB {
 	
 	public synchronized ResultSet query(String sqlExpression) throws SQLException {
 		logger.trace("query: "+sqlExpression);
-		return connection.createStatement().executeQuery(sqlExpression);
+		return connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE).executeQuery(sqlExpression);
 	}
 	
 	public synchronized void update(String sqlExpression) throws SQLException {

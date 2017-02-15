@@ -1,0 +1,28 @@
+#searchBtn {
+    -fx-font-weight: bold;  -fx-font-size: 24px;  -fx-background-color: gold;
+    -fx-pref-height: 200;  -fx-pref-width: 200;
+}
+
+#profileBtn {
+    -fx-font-weight: bold;  -fx-font-size: 24px;  -fx-background-color: deepskyblue;
+    -fx-pref-height: 200;  -fx-pref-width: 200;
+}
+
+#signoutBtn {
+    -fx-font-weight: bold;  -fx-font-size: 24px;  -fx-background-color: orangered;
+    -fx-pref-height: 200;  -fx-pref-width: 200;
+}
+
+#adminBtn {
+    -fx-font-weight: bold;  -fx-font-size: 24px;  -fx-background-color: lawngreen;
+    -fx-pref-height: 200;  -fx-pref-width: 200;
+}
+
+#controlBox {
+    -fx-background-color: transparent;
+    -fx-padding: 10 10 10 10;
+    -fx-spacing: 10;
+    -fx-alignment: center;
+}
+
+

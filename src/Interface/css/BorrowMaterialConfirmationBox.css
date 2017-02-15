@@ -1,0 +1,22 @@
+#root{
+    -fx-background-color: inherit;
+}
+
+#mainPane{
+    -fx-height: 700;
+    -fx-pref-width: 500;
+}
+
+#confirmation_identification{
+    -fx-background-color: inherit;
+    -fx-font-weight: bold;
+    -fx-text-fill: blue;
+    -fx-font-size: 24px;
+    -fx-wrap-text: true;
+}
+
+#confirmation_list{
+    -fx-background-color: inherit;
+    -fx-text-fill: black;
+    -fx-font-size: 16px;
+}
